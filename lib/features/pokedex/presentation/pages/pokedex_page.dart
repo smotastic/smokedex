@@ -35,7 +35,12 @@ class PokedexView extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
         if (state is ListPokemonLoadedState) {
-          return ListView.builder(
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              childAspectRatio: 3 / 2,
+              crossAxisCount: (MediaQuery.of(context).size.width ~/ 250),
+              mainAxisSpacing: 4,
+            ),
             itemBuilder: (_, i) {
               PokemonEntry entry = state.pokemons[i];
               return PokemonListCard(entry);

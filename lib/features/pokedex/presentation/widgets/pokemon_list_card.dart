@@ -9,7 +9,14 @@ class PokemonListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(entry.name),
+      child: Card(
+        elevation: 5,
+        child: ListTile(
+          title: Text(entry.name),
+          subtitle: Text('Name'),
+          leading: Icon(Icons.ac_unit),
+        ),
+      ),
     );
   }
 }
