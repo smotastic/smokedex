@@ -6,5 +6,6 @@ part 'pokemon_mapper.g.dart';
 
 @Mapper()
 abstract class PokemonMapper {
+  static PokemonMapper get instance => PokemonMapperImpl();
   PokemonEntry fromModel(PokemonModel model);
 }
