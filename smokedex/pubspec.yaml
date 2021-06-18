@@ -30,6 +30,8 @@ dependencies:
   get_it: ^7.1.3
   injectable: ^1.4.1
   smartstruct: ^1.1.2+1
+  smokeapi:
+    path: '../smokeapi'
 
 dev_dependencies:
   flutter_test:
