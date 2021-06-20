@@ -5,8 +5,18 @@ import 'package:smokedex/core/domain/usecase.dart';
 import 'package:smokedex/features/pokedex/domain/entities/pokemon_entry.dart';
 import 'package:smokedex/features/pokedex/domain/ports/list_pokemon_port.dart';
 
+class ListPokemonParams extends Params {
+  final num start;
+  final num offset;
+
+  ListPokemonParams(this.start, this.offset);
+
+  @override
+  List<Object?> get props => [start, offset];
+}
+
 abstract class ListPokemonUsecase
-    extends UseCase<List<PokemonEntry>, NoParams> {}
+    extends UseCase<List<PokemonEntry>, ListPokemonParams> {}
 
 @LazySingleton(as: ListPokemonUsecase)
 class ListPokemonUseCaseImpl extends ListPokemonUsecase {
@@ -14,7 +24,8 @@ class ListPokemonUseCaseImpl extends ListPokemonUsecase {
 
   ListPokemonUseCaseImpl(this._port);
   @override
-  Future<Either<Failure, List<PokemonEntry>>> execute(NoParams params) async {
-    return this._port.list();
+  Future<Either<Failure, List<PokemonEntry>>> execute(
+      ListPokemonParams params) async {
+    return this._port.list(params.start, params.offset);
   }
 }

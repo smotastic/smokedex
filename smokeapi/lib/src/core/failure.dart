@@ -8,7 +8,3 @@ abstract class PokeFailure extends Equatable {
   @override
   List<Object?> get props => [code];
 }
-
-class UnknownFailure extends PokeFailure {
-  UnknownFailure() : super(0);
-}

@@ -9,8 +9,9 @@ import 'package:smokedex/features/pokedex/domain/ports/list_pokemon_port.dart';
 @LazySingleton(as: ListPokemonPort)
 class ListPokemonAdapter extends ListPokemonPort {
   @override
-  Future<Either<Failure, List<PokemonEntry>>> list() async {
-    final result = await PokeApi().pokemon().page(0, 0);
+  Future<Either<Failure, List<PokemonEntry>>> list(
+      num start, num offset) async {
+    final result = await PokeApi().pokemon().page(start, offset);
     return result.fold(
         (l) => Left(UnknownFailure()),
         (r) => Right(r
