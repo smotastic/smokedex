@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:http/http.dart';
+import 'package:smokeapi/src/converter.dart';
+import 'package:smokeapi/src/models/basemodel.dart';
 
 abstract class PokeClient {
   PokeClient();
+
+  Future<T> get<T extends BaseModel>(String path);
 }
 
 class PokeRemoteClient extends PokeClient {
@@ -13,4 +19,11 @@ class PokeRemoteClient extends PokeClient {
   }
 
   PokeRemoteClient._(this._url, this._client);
+
+  @override
+  Future<T> get<T extends BaseModel>(String urlPath) async {
+    final response = await _client.get(Uri.https(_url, urlPath));
+    final json = jsonDecode(response.body);
+    return ConverterFactory().get<T>().fromJson(json) as T;
+  }
 }
