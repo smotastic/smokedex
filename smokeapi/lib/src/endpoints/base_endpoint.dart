@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:smokeapi/src/client.dart';
 import 'package:smokeapi/src/core/failure.dart';
 import 'package:smokeapi/src/models/basemodel.dart';
+import 'package:smokeapi/src/models/pagination.dart';
 
 abstract class BaseEndpoint<T extends BaseModel> {
   final PokeClient client;
@@ -14,5 +15,5 @@ abstract class BaseEndpoint<T extends BaseModel> {
 abstract class PaginatedEndpoint<T extends BaseModel> extends BaseEndpoint<T> {
   PaginatedEndpoint(PokeClient client) : super(client);
 
-  Future<Either<PokeFailure, List<T>>> page(num start, num offset);
+  Future<Either<PokeFailure, Pagination>> page(num pageSize, num offset);
 }

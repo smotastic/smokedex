@@ -3,6 +3,7 @@ import 'package:smokeapi/src/client.dart';
 import 'package:smokeapi/src/core/failure.dart';
 import 'package:smokeapi/src/endpoints/base_endpoint.dart';
 import 'package:smokeapi/src/models/pokemodel.dart';
+import 'package:smokeapi/src/models/pagination.dart';
 
 class PokemonEndpoint extends PaginatedEndpoint<PokemonModel> {
   PokemonEndpoint(PokeClient client) : super(client);
@@ -14,8 +15,9 @@ class PokemonEndpoint extends PaginatedEndpoint<PokemonModel> {
   }
 
   @override
-  Future<Either<PokeFailure, List<PokemonModel>>> page(
-      num start, num offset) async {
-    return Right([PokemonModel(1, 'ditto'), PokemonModel(2, 'Fukano')]);
+  Future<Either<PokeFailure, Pagination>> page(num pageSize, num offset) async {
+    final result =
+        await client.get<Pagination>('pokemon?limit=$pageSize&offset=$offset');
+    return Right(result);
   }
 }
