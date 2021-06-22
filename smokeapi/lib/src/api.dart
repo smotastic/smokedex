@@ -4,8 +4,8 @@ import 'package:smokeapi/src/endpoints/pokemon_endpoint.dart';
 class PokeApi extends PokeApiCalls {
   final PokeClient client;
 
-  PokeApi({url = 'https://pokeapi.co/api/v2/'})
-      : client = PokeRemoteClient(url: url);
+  PokeApi({url = 'pokeapi.co', apiVersion: '/api/v2/'})
+      : client = PokeRemoteClient(url: url, apiVersion: apiVersion);
 
   @override
   PokemonEndpoint pokemon() {

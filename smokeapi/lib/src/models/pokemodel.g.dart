@@ -8,7 +8,7 @@ part of 'pokemodel.dart';
 
 PokemonModel _$PokemonModelFromJson(Map<String, dynamic> json) {
   return PokemonModel(
-    json['id'] as String,
+    json['id'] as int,
     json['name'] as String,
   );
 }

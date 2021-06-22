@@ -4,7 +4,7 @@ part 'pokemodel.g.dart';
 
 @JsonSerializable()
 class PokemonModel extends BaseModel {
-  final String id;
+  final int id;
   final String name;
 
   PokemonModel(this.id, this.name);

@@ -1,7 +1,7 @@
 import 'package:smokeapi/smokeapi.dart';
 import 'package:smokeapi/src/models/basemodel.dart';
 
-abstract class Converter<T extends BaseModel> {
+abstract class Converter<T> {
   T fromJson(Map<String, dynamic> json);
 }
 
@@ -16,5 +16,5 @@ class ConverterFactory {
   final Map<Type, Converter> _converters =
       Map.unmodifiable({PokemonModel: PokemonConverter()});
 
-  Converter get<T extends BaseModel>() => _converters[T]!;
+  Converter get<T>() => _converters[T]!;
 }

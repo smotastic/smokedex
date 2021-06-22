@@ -9,12 +9,13 @@ class PokemonEndpoint extends PaginatedEndpoint<PokemonModel> {
 
   @override
   Future<Either<PokeFailure, PokemonModel>> get(id) async {
-    return Right(PokemonModel('1', 'ditto'));
+    final result = await client.get<PokemonModel>('pokemon/$id');
+    return Right(result);
   }
 
   @override
   Future<Either<PokeFailure, List<PokemonModel>>> page(
       num start, num offset) async {
-    return Right([PokemonModel('1', 'ditto'), PokemonModel('2', 'Fukano')]);
+    return Right([PokemonModel(1, 'ditto'), PokemonModel(2, 'Fukano')]);
   }
 }
