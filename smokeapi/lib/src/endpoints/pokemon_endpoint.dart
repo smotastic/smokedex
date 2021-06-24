@@ -16,8 +16,9 @@ class PokemonEndpoint extends PaginatedEndpoint<PokemonModel> {
 
   @override
   Future<Either<PokeFailure, Pagination>> page(num pageSize, num offset) async {
-    final result =
-        await client.get<Pagination>('pokemon?limit=$pageSize&offset=$offset');
+    // ?limit=$pageSize&offset=$offset
+    final result = await client.get<Pagination>('pokemon',
+        queryParams: {'limit': '$pageSize', 'offset': '$offset'});
     return Right(result);
   }
 }

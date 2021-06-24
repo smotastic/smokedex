@@ -16,12 +16,12 @@ class PaginationEntry {
 @JsonSerializable()
 class Pagination {
   final int count;
-  final String next;
-  final String prev;
+  final String? next;
+  final String? previous;
 
   final List<PaginationEntry> results;
 
-  Pagination(this.count, this.next, this.prev, this.results);
+  Pagination(this.count, this.next, this.previous, this.results);
 
   factory Pagination.fromJson(Map<String, dynamic> json) {
     return _$PaginationFromJson(json);
