@@ -6,13 +6,13 @@ import 'package:smokedex/features/pokedex/domain/entities/pokemon_entry.dart';
 import 'package:smokedex/features/pokedex/domain/ports/list_pokemon_port.dart';
 
 class ListPokemonParams extends Params {
-  final num start;
+  final num pageSize;
   final num offset;
 
-  ListPokemonParams(this.start, this.offset);
+  ListPokemonParams(this.pageSize, this.offset);
 
   @override
-  List<Object?> get props => [start, offset];
+  List<Object?> get props => [pageSize, offset];
 }
 
 abstract class ListPokemonUsecase
@@ -26,6 +26,6 @@ class ListPokemonUseCaseImpl extends ListPokemonUsecase {
   @override
   Future<Either<Failure, List<PokemonEntry>>> execute(
       ListPokemonParams params) async {
-    return this._port.list(params.start, params.offset);
+    return this._port.list(params.pageSize, params.offset);
   }
 }
