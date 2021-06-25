@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:injectable/injectable.dart';
@@ -14,11 +15,23 @@ class ListPokemonAdapter extends ListPokemonPort {
   Future<Either<Failure, List<PokemonEntry>>> list(
       num pageSize, num offset) async {
     // final result = await PokeApi().pokemon().get(Random().nextInt(250));
-    final result = await PokeApi().pokemon().page(20, 0);
+    final result = await PokeApi().pokemon().page(55, 0);
     // TODO PaginationEntry Mapper
-    return result.fold((l) => Left(UnknownFailure()), (r) {
-      return Right(
-          r.results.map((result) => PokemonEntry(result.name)).toList());
-    });
+    return result.fold(
+        (l) => Left(UnknownFailure()),
+        (r) async =>
+            Right(await Future.wait(r.results.map(mapResultEntry).toList())));
+  }
+
+  Future<PokemonEntry> mapResultEntry(resultEntry) async {
+    final result = await PokeApi().pokemon().get(resultEntry.id);
+    // final pokemon = result.getOrElse(() => PokemonModel(
+    //     -1, "Unknown", -1, PokemonSpriteModel('', '', '', '', '', '', '', )));
+    final pokemon = result.getOrElse(() => throw UnknownFailure());
+    return PokemonEntry(
+        resultEntry.name,
+        resultEntry.id,
+        pokemon.sprites.other?.officialArtwork?.frontDefault ??
+            pokemon.sprites.frontDefault!);
   }
 }

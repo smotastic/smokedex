@@ -9,14 +9,14 @@ part of 'pagination.dart';
 PaginationEntry _$PaginationEntryFromJson(Map<String, dynamic> json) {
   return PaginationEntry(
     json['name'] as String,
-    json['url'] as String,
+    PaginationEntry.idMapper(json['url'] as String),
   );
 }
 
 Map<String, dynamic> _$PaginationEntryToJson(PaginationEntry instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'url': instance.url,
+      'url': instance.id,
     };
 
 Pagination _$PaginationFromJson(Map<String, dynamic> json) {

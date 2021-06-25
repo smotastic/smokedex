@@ -4,10 +4,17 @@ part 'pagination.g.dart';
 
 @JsonSerializable()
 class PaginationEntry {
-  final String name;
-  final String url;
+  static int idMapper(String url) {
+    final uri = Uri.parse(url);
+    return int.parse(
+        uri.pathSegments.lastWhere((element) => element.isNotEmpty));
+  }
 
-  PaginationEntry(this.name, this.url);
+  final String name;
+  @JsonKey(name: 'url', fromJson: idMapper)
+  final int id;
+
+  PaginationEntry(this.name, this.id);
   factory PaginationEntry.fromJson(Map<String, dynamic> json) {
     return _$PaginationEntryFromJson(json);
   }

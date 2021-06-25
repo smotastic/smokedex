@@ -29,7 +29,7 @@ dependencies:
   flutter_bloc: ^7.0.1
   get_it: ^7.1.3
   injectable: ^1.4.1
-  smartstruct: ^1.1.2+1
+  # smartstruct: ^1.1.3
   smokeapi:
     path: '../smokeapi'
 
@@ -38,7 +38,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^2.0.4
   injectable_generator: ^1.4.1
-  smartstruct_generator: ^1.1.2+1
+  smartstruct_generator: ^1.1.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
