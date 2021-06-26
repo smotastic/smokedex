@@ -15,7 +15,7 @@ class ListPokemonAdapter extends ListPokemonPort {
   Future<Either<Failure, List<PokemonEntry>>> list(
       num pageSize, num offset) async {
     // final result = await PokeApi().pokemon().get(Random().nextInt(250));
-    final result = await PokeApi().pokemon().page(55, 0);
+    final result = await PokeApi().pokemon().page(1, 0);
     // TODO PaginationEntry Mapper
     return result.fold(
         (l) => Left(UnknownFailure()),
@@ -23,15 +23,18 @@ class ListPokemonAdapter extends ListPokemonPort {
             Right(await Future.wait(r.results.map(mapResultEntry).toList())));
   }
 
-  Future<PokemonEntry> mapResultEntry(resultEntry) async {
+  Future<PokemonEntry> mapResultEntry(NamedResourceModel resultEntry) async {
     final result = await PokeApi().pokemon().get(resultEntry.id);
     // final pokemon = result.getOrElse(() => PokemonModel(
     //     -1, "Unknown", -1, PokemonSpriteModel('', '', '', '', '', '', '', )));
     final pokemon = result.getOrElse(() => throw UnknownFailure());
+
     return PokemonEntry(
-        resultEntry.name,
-        resultEntry.id,
-        pokemon.sprites.other?.officialArtwork?.frontDefault ??
-            pokemon.sprites.frontDefault!);
+      resultEntry.name,
+      resultEntry.id,
+      pokemon.sprites.other?.officialArtwork?.frontDefault ??
+          pokemon.sprites.frontDefault!,
+      pokemon.types.map((e) => e.type.name).toList(),
+    );
   }
 }

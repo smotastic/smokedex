@@ -20,39 +20,42 @@ class PokemonListCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // PIC + NAME
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
+            Expanded(
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                    ),
+                    child: Image.network(
+                      entry.imageUrl,
+                      fit: BoxFit.scaleDown,
+                      height: 140,
+                      width: double.infinity,
+                    ),
                   ),
-                  child: Image.network(
-                    entry.imageUrl,
-                    fit: BoxFit.scaleDown,
-                    height: 140,
-                    width: double.infinity,
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Container(
-                    width: 100,
-                    color: Colors.blueGrey[400]!,
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        entry.name,
-                        style: TextStyle(fontSize: 26, color: Colors.white),
-                        softWrap: true,
-                        overflow: TextOverflow.fade,
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                      width: 100,
+                      color: Colors.blueGrey[400]!,
+                      padding:
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          entry.name,
+                          style: TextStyle(fontSize: 26, color: Colors.white),
+                          softWrap: true,
+                          overflow: TextOverflow.fade,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             // INFOS
             Container(
@@ -81,7 +84,7 @@ class PokemonListCard extends StatelessWidget {
                       SizedBox(
                         width: 6,
                       ),
-                      Text('Complex'),
+                      Text(entry.types.toString()),
                     ],
                   ),
                   Row(

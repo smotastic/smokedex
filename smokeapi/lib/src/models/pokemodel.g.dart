@@ -11,6 +11,9 @@ PokemonModel _$PokemonModelFromJson(Map<String, dynamic> json) {
     json['id'] as int,
     json['name'] as String,
     json['weight'] as int,
+    (json['types'] as List<dynamic>)
+        .map((e) => PokemonTypeModel.fromJson(e as Map<String, dynamic>))
+        .toList(),
     PokemonSpriteModel.fromJson(json['sprites'] as Map<String, dynamic>),
   );
 }
@@ -20,7 +23,21 @@ Map<String, dynamic> _$PokemonModelToJson(PokemonModel instance) =>
       'id': instance.id,
       'name': instance.name,
       'weight': instance.weight,
+      'types': instance.types,
       'sprites': instance.sprites,
+    };
+
+PokemonTypeModel _$PokemonTypeModelFromJson(Map<String, dynamic> json) {
+  return PokemonTypeModel(
+    json['slot'] as int,
+    NamedResourceModel.fromJson(json['type'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$PokemonTypeModelToJson(PokemonTypeModel instance) =>
+    <String, dynamic>{
+      'slot': instance.slot,
+      'type': instance.type,
     };
 
 PokemonSpriteModel _$PokemonSpriteModelFromJson(Map<String, dynamic> json) {

@@ -1,5 +1,6 @@
 import 'package:smokeapi/src/models/basemodel.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:smokeapi/src/models/named_resource.dart';
 part 'pokemodel.g.dart';
 
 @JsonSerializable()
@@ -7,12 +8,25 @@ class PokemonModel extends BaseModel {
   final int id;
   final String name;
   final int weight;
+  final List<PokemonTypeModel> types;
   final PokemonSpriteModel sprites;
 
-  PokemonModel(this.id, this.name, this.weight, this.sprites);
+  PokemonModel(this.id, this.name, this.weight, this.types, this.sprites);
 
   factory PokemonModel.fromJson(Map<String, dynamic> json) {
     return _$PokemonModelFromJson(json);
+  }
+}
+
+@JsonSerializable()
+class PokemonTypeModel {
+  final int slot;
+  final NamedResourceModel type;
+
+  PokemonTypeModel(this.slot, this.type);
+
+  factory PokemonTypeModel.fromJson(Map<String, dynamic> json) {
+    return _$PokemonTypeModelFromJson(json);
   }
 }
 

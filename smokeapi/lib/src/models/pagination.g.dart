@@ -6,26 +6,13 @@ part of 'pagination.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PaginationEntry _$PaginationEntryFromJson(Map<String, dynamic> json) {
-  return PaginationEntry(
-    json['name'] as String,
-    PaginationEntry.idMapper(json['url'] as String),
-  );
-}
-
-Map<String, dynamic> _$PaginationEntryToJson(PaginationEntry instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'url': instance.id,
-    };
-
 Pagination _$PaginationFromJson(Map<String, dynamic> json) {
   return Pagination(
     json['count'] as int,
     json['next'] as String?,
     json['previous'] as String?,
     (json['results'] as List<dynamic>)
-        .map((e) => PaginationEntry.fromJson(e as Map<String, dynamic>))
+        .map((e) => NamedResourceModel.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
 }

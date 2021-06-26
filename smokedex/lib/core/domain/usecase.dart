@@ -7,13 +7,13 @@ import 'failure.dart';
 abstract class UseCase<T, P extends Params> {
   @nonVirtual
   Future<Either<Failure, T>> call(P params) async {
-    try {
-      return await execute(params);
-    } catch (e) {
-      // log e
-      print(e);
-      return Left(UnknownFailure());
-    }
+    // try {
+    return await execute(params);
+    // } catch (e) {
+    //   // log e
+    //   print(e);
+    //   return Left(UnknownFailure());
+    // }
   }
 
   Future<Either<Failure, T>> execute(P params);
