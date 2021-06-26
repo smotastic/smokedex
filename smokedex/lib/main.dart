@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smokedex/features/pokedex/presentation/pages/detail_pokemon_page.dart';
 import 'package:smokedex/features/pokedex/presentation/pages/pokedex_page.dart';
 
 import 'service_locator.dart';
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: PokedexPage(),
+      routes: {
+        DetailPokemonPage.route: (_) => DetailPokemonPage(),
+      },
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smokedex/features/pokedex/domain/entities/pokemon_entry.dart';
+import 'package:smokedex/features/pokedex/presentation/pages/detail_pokemon_page.dart';
 
 class PokemonListCard extends StatelessWidget {
   final PokemonEntry entry;
@@ -31,7 +32,10 @@ class PokemonListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => {},
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(DetailPokemonPage.route, arguments: entry);
+      },
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
@@ -50,11 +54,14 @@ class PokemonListCard extends StatelessWidget {
                       topLeft: Radius.circular(15),
                       topRight: Radius.circular(15),
                     ),
-                    child: Image.network(
-                      entry.imageUrl,
-                      fit: BoxFit.scaleDown,
-                      height: 140,
-                      width: double.infinity,
+                    child: Hero(
+                      tag: entry.id,
+                      child: Image.network(
+                        entry.imageUrl,
+                        fit: BoxFit.scaleDown,
+                        height: 140,
+                        width: double.infinity,
+                      ),
                     ),
                   ),
                   Positioned(

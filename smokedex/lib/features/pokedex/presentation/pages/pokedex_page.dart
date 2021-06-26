@@ -12,7 +12,7 @@ class PokedexPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
-          GetIt.I<ListPokemonBloc>()..add(ListPokemonRequestedEvent(25, 0)),
+          GetIt.I<ListPokemonBloc>()..add(ListPokemonRequestedEvent(10, 0)),
       child: PokedexView(),
     );
   }
