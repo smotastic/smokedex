@@ -20,7 +20,8 @@ class ListPokemonBloc extends Bloc<ListPokemonEvent, ListPokemonState> {
   Stream<ListPokemonState> mapEventToState(ListPokemonEvent event) async* {
     yield ListPokemonLoadingState();
     if (event is ListPokemonRequestedEvent) {
-      final result = await listPokemonUseCase(ListPokemonParams(0, 0));
+      final result = await listPokemonUseCase(
+          ListPokemonParams(event.pageSize, event.offset));
       yield result.fold((l) => ListPokemonLoadErrorState(l),
           (r) => ListPokemonLoadedState(r));
     }

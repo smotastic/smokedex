@@ -15,7 +15,7 @@ class ListPokemonAdapter extends ListPokemonPort {
   Future<Either<Failure, List<PokemonEntry>>> list(
       num pageSize, num offset) async {
     // final result = await PokeApi().pokemon().get(Random().nextInt(250));
-    final result = await PokeApi().pokemon().page(6, 0);
+    final result = await PokeApi().pokemon().page(pageSize, offset);
     // TODO PaginationEntry Mapper
     return result.fold(
         (l) => Left(UnknownFailure()),
