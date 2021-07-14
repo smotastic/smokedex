@@ -12,7 +12,7 @@ class PokedexPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
-          GetIt.I<ListPokemonBloc>()..add(ListPokemonRequestedEvent(10, 0)),
+          GetIt.I<ListPokemonBloc>()..add(ListPokemonRequestedEvent(25, 0)),
       child: PokedexView(),
     );
   }
@@ -42,10 +42,16 @@ class PokedexView extends StatelessWidget {
               mainAxisSpacing: 4,
             ),
             itemBuilder: (_, i) {
+              if (i >= state.pokemons.length) {
+                context
+                    .read<ListPokemonBloc>()
+                    .add(ListPokemonNextPageRequestedEvent());
+                return Center(child: CircularProgressIndicator());
+              }
               PokemonEntry entry = state.pokemons[i];
               return PokemonListCard(entry);
             },
-            itemCount: state.pokemons.length,
+            itemCount: state.pokemons.length + 1,
           );
         }
         return Container();

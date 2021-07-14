@@ -10,3 +10,8 @@ class ListPokemonRequestedEvent extends ListPokemonEvent {
   @override
   List<Object?> get props => [this.pageSize, this.offset];
 }
+
+class ListPokemonNextPageRequestedEvent extends ListPokemonEvent {
+  @override
+  List<Object?> get props => [];
+}

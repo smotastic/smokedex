@@ -13,7 +13,7 @@ class ListPokemonLoadedState extends ListPokemonState {
   ListPokemonLoadedState(this.pokemons);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [pokemons];
 }
 
 class ListPokemonLoadErrorState extends ListPokemonState {
