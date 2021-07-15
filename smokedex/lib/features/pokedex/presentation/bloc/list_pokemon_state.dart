@@ -1,4 +1,4 @@
-part of 'list_pokemon_bloc.dart';
+part of 'list_pokemon_cubit.dart';
 
 abstract class ListPokemonState extends Equatable {}
 

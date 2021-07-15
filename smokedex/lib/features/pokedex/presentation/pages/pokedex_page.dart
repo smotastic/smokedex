@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:smokedex/features/pokedex/domain/entities/pokemon_entry.dart';
-import 'package:smokedex/features/pokedex/presentation/bloc/list_pokemon_bloc.dart';
+import 'package:smokedex/features/pokedex/presentation/bloc/list_pokemon_cubit.dart';
 import 'package:smokedex/features/pokedex/presentation/widgets/pokemon_list_card.dart';
 
 class PokedexPage extends StatelessWidget {
@@ -11,8 +11,7 @@ class PokedexPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          GetIt.I<ListPokemonBloc>()..add(ListPokemonRequestedEvent(25, 0)),
+      create: (_) => GetIt.I<ListPokemonCubit>()..initialLoad(),
       child: PokedexView(),
     );
   }
@@ -29,7 +28,7 @@ class PokedexView extends StatelessWidget {
       appBar: AppBar(
         title: Text('Pokedex'),
       ),
-      body: BlocBuilder<ListPokemonBloc, ListPokemonState>(
+      body: BlocBuilder<ListPokemonCubit, ListPokemonState>(
           builder: (context, state) {
         if (state is ListPokemonLoadingState) {
           return Center(child: CircularProgressIndicator());
@@ -43,9 +42,7 @@ class PokedexView extends StatelessWidget {
             ),
             itemBuilder: (_, i) {
               if (i >= state.pokemons.length) {
-                context
-                    .read<ListPokemonBloc>()
-                    .add(ListPokemonNextPageRequestedEvent());
+                BlocProvider.of<ListPokemonCubit>(context).requestNextPage();
                 return Center(child: CircularProgressIndicator());
               }
               PokemonEntry entry = state.pokemons[i];
