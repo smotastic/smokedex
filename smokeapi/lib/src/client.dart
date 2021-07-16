@@ -31,7 +31,7 @@ class PokeRemoteClient extends PokeClient {
 
   @override
   Future<T> get<T>(String urlPath, {Map<String, String>? queryParams}) async {
-    print('$_url$_apiVersion$urlPath');
+    // print('$_url$_apiVersion$urlPath');
     final uri = Uri.https(_url, '$_apiVersion$urlPath', queryParams);
     final response = await _client.get(uri);
     final json = jsonDecode(response.body);

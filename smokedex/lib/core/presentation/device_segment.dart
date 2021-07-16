@@ -6,8 +6,8 @@ class DeviceSegment {
   static const mobile = 'mobile';
   static const web = 'web';
 
-  static const DeviceSegment mobileDevice = const DeviceSegment('mobile');
-  static const DeviceSegment webDevice = const DeviceSegment('web');
+  static const DeviceSegment mobileDevice = const DeviceSegment(mobile);
+  static const DeviceSegment webDevice = const DeviceSegment(web);
 
   final String name;
   const DeviceSegment(this.name);

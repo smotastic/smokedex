@@ -27,6 +27,7 @@ class ListPokemonAdapter extends ListPokemonPort {
     List<PokemonModel> pokemon;
     if (localResult.isRight()) {
       final localPokemon = localResult.getOrElse(() => throw UnknownFailure());
+      // very simple check, could also check all matching id's of local pokemon and only request missing ones
       if (localPokemon.length == pageSize) {
         pokemon = localPokemon;
         return Right(pokemon.map((model) => fromModel(model)).toList());
