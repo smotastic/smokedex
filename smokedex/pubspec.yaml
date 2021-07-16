@@ -33,6 +33,9 @@ dependencies:
   smokeapi:
     path: '../smokeapi'
   flutter_svg: ^0.22.0
+  sqflite: ^2.0.0+3
+  path_provider: ^2.0.2
+  path: ^1.8.0
   
 
 dev_dependencies:
