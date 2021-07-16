@@ -1,0 +1,27 @@
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+import 'package:smokeapi/smokeapi.dart';
+import 'package:smokedex/core/domain/failure.dart';
+
+abstract class ListPokemonDataSourceRemote {
+  Future<Either<Failure, List<PokemonModel>>> list(num pageSize, num offset);
+}
+
+@LazySingleton(as: ListPokemonDataSourceRemote)
+class ListPokemonDataSourceRemoteImpl extends ListPokemonDataSourceRemote {
+  @override
+  Future<Either<Failure, List<PokemonModel>>> list(
+      num pageSize, num offset) async {
+    final result = await PokeApi().pokemon().page(pageSize, offset);
+    return result.fold(
+        (l) => Left(UnknownFailure()),
+        (r) async =>
+            Right(await Future.wait(r.results.map(_fromResultEntry).toList())));
+  }
+
+  Future<PokemonModel> _fromResultEntry(NamedResourceModel resultEntry) async {
+    final result = await PokeApi().pokemon().get(resultEntry.id);
+    final pokemon = result.getOrElse(() => throw UnknownFailure());
+    return pokemon;
+  }
+}
