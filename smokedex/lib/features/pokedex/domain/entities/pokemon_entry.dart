@@ -1,6 +1,6 @@
 class PokemonEntry {
   final String name;
-  final int id;
+  final num id;
   final String imageUrl;
   final List<String> types;
 

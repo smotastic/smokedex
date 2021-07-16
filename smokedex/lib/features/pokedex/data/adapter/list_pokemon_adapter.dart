@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:injectable/injectable.dart';
-import 'package:smokeapi/smokeapi.dart';
 import 'package:smokedex/features/pokedex/data/datasources/local/list_pokemon_ds_local.dart';
 import 'package:smokedex/features/pokedex/data/datasources/remote/list_pokemon_ds_remote.dart';
+import 'package:smokedex/features/pokedex/data/models/poke_model.dart';
 import 'package:smokedex/features/pokedex/data/models/pokemon_mapper.dart';
 import 'package:smokedex/features/pokedex/domain/entities/pokemon_entry.dart';
 import 'package:smokedex/core/domain/failure.dart';
@@ -24,13 +23,15 @@ class ListPokemonAdapter extends ListPokemonPort {
     // first check locally
     final localResult = await dataSourceLocal.list(pageSize, offset);
 
-    List<PokemonModel> pokemon;
+    List<PokeModel> pokemon;
     if (localResult.isRight()) {
       final localPokemon = localResult.getOrElse(() => throw UnknownFailure());
       // very simple check, could also check all matching id's of local pokemon and only request missing ones
       if (localPokemon.length == pageSize) {
         pokemon = localPokemon;
-        return Right(pokemon.map((model) => fromModel(model)).toList());
+        return Right(pokemon
+            .map((model) => PokemonEntryMapper.instance.fromModel(model))
+            .toList());
       }
     }
 
@@ -40,19 +41,9 @@ class ListPokemonAdapter extends ListPokemonPort {
       var entries = <PokemonEntry>[];
       r.forEach((model) {
         dataSourceLocal.cache(model.id - 1, model);
-        entries.add(fromModel(model));
+        entries.add(PokemonEntryMapper.instance.fromModel(model));
       });
       return Right(entries);
     });
-  }
-
-  PokemonEntry fromModel(PokemonModel model) {
-    return PokemonEntry(
-      model.name,
-      model.id,
-      model.sprites.other?.officialArtwork?.frontDefault ??
-          model.sprites.frontDefault!,
-      model.types.map((e) => e.type.name).toList(),
-    );
   }
 }
