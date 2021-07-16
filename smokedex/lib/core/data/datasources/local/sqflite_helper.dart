@@ -23,7 +23,6 @@ class SqfliteHelper {
   }
 
   Future _onCreate(Database db, int version) async {
-    Sqflite.devSetDebugModeOn(true);
     await db.execute('''
       CREATE TABLE ${PokemonSqlMeta.table} (
           ${PokemonSqlMeta.id} INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -35,29 +34,30 @@ class SqfliteHelper {
     await db.execute('''
       CREATE TABLE ${PokemonTypeSqlMeta.table} (
           ${PokemonTypeSqlMeta.type} TEXT NOT NULL,
-          ${PokemonTypeSqlMeta.pokemonId} INTEGER
+          ${PokemonTypeSqlMeta.pokemonId} INTEGER,
+          FOREIGN KEY(${PokemonTypeSqlMeta.pokemonId}) REFERENCES ${PokemonSqlMeta.table}(${PokemonSqlMeta.id})
       )    
       ''');
 
-    await db.insert(PokemonTypeSqlMeta.table,
-        {PokemonTypeSqlMeta.type: 'grass', PokemonTypeSqlMeta.pokemonId: 1});
-    await db.insert(PokemonTypeSqlMeta.table,
-        {PokemonTypeSqlMeta.type: 'fire', PokemonTypeSqlMeta.pokemonId: 1});
-    await db.insert(PokemonTypeSqlMeta.table,
-        {PokemonTypeSqlMeta.type: 'water', PokemonTypeSqlMeta.pokemonId: 2});
+    // await db.insert(PokemonTypeSqlMeta.table,
+    //     {PokemonTypeSqlMeta.type: 'grass', PokemonTypeSqlMeta.pokemonId: 1});
+    // await db.insert(PokemonTypeSqlMeta.table,
+    //     {PokemonTypeSqlMeta.type: 'fire', PokemonTypeSqlMeta.pokemonId: 1});
+    // await db.insert(PokemonTypeSqlMeta.table,
+    //     {PokemonTypeSqlMeta.type: 'water', PokemonTypeSqlMeta.pokemonId: 2});
 
-    await db.insert(PokemonSqlMeta.table, {
-      PokemonSqlMeta.id: 1,
-      PokemonSqlMeta.name: 'Bisa',
-      PokemonSqlMeta.image:
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png'
-    });
+    // await db.insert(PokemonSqlMeta.table, {
+    //   PokemonSqlMeta.id: 1,
+    //   PokemonSqlMeta.name: 'Bisa',
+    //   PokemonSqlMeta.image:
+    //       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png'
+    // });
 
-    await db.insert(PokemonSqlMeta.table, {
-      PokemonSqlMeta.id: 2,
-      PokemonSqlMeta.name: 'Glu',
-      PokemonSqlMeta.image:
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png'
-    });
+    // await db.insert(PokemonSqlMeta.table, {
+    //   PokemonSqlMeta.id: 2,
+    //   PokemonSqlMeta.name: 'Glu',
+    //   PokemonSqlMeta.image:
+    //       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png'
+    // });
   }
 }

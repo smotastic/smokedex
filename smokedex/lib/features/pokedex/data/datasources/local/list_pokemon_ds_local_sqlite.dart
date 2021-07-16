@@ -55,6 +55,23 @@ class ListPokemonDataSourceLocalSqlite extends ListPokemonDataSourceLocal {
   @override
   Future<Either<Failure, Map<num, PokemonModel>>> cache(
       num index, PokemonModel pokemon) async {
+    final db = await _database;
+    await db.insert(
+        PokemonSqlMeta.table,
+        {
+          PokemonSqlMeta.id: pokemon.id,
+          PokemonSqlMeta.name: pokemon.name,
+          PokemonSqlMeta.image:
+              pokemon.sprites.other?.officialArtwork?.frontDefault ??
+                  pokemon.sprites.frontDefault!
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace);
+    for (var type in pokemon.types) {
+      await db.insert(PokemonTypeSqlMeta.table, {
+        PokemonTypeSqlMeta.type: type.type.name,
+        PokemonTypeSqlMeta.pokemonId: pokemon.id
+      });
+    }
     return Right({});
   }
 }
