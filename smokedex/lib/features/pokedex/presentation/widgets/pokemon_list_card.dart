@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smokedex/features/pokedex/domain/entities/pokemon_entry.dart';
-import 'package:smokedex/features/pokedex/presentation/pages/detail_pokemon_page.dart';
+import 'package:smokedex/features/pokemon_detail/presentation/pages/detail_pokemon_page.dart';
 
 class PokemonListCard extends StatelessWidget {
   final PokemonEntry entry;
@@ -34,7 +34,7 @@ class PokemonListCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.of(context)
-            .pushNamed(DetailPokemonPage.route, arguments: entry);
+            .pushNamed(DetailPokemonPage.route, arguments: entry.id);
       },
       child: Card(
         shape: RoundedRectangleBorder(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smokedex/core/presentation/device_segment.dart';
-import 'package:smokedex/features/pokedex/presentation/pages/detail_pokemon_page.dart';
+import 'package:smokedex/features/pokemon_detail/presentation/pages/detail_pokemon_page.dart';
 import 'package:smokedex/features/pokedex/presentation/pages/pokedex_page.dart';
 
 import 'core/presentation/themes.dart';

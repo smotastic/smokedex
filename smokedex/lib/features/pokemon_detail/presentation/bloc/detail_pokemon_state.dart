@@ -1,4 +1,4 @@
-part of 'detail_pokemon_bloc.dart';
+part of 'detail_pokemon_cubit.dart';
 
 abstract class DetailPokemonState extends Equatable {}
 
@@ -8,7 +8,7 @@ class DetailPokemonLoadingState extends DetailPokemonState {
 }
 
 class DetailPokemonLoadedState extends DetailPokemonState {
-  final PokemonEntry pokemon;
+  final PokemonDetail pokemon;
 
   DetailPokemonLoadedState(this.pokemon);
 
