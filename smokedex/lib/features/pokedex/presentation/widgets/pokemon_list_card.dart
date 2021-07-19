@@ -69,7 +69,7 @@ class PokemonListCard extends StatelessWidget {
                     right: 0,
                     child: Container(
                       width: 100,
-                      color: Colors.blueGrey[400]!,
+                      // color: Colors.blueGrey[400]!,
                       padding:
                           EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                       child: FittedBox(
@@ -90,7 +90,7 @@ class PokemonListCard extends StatelessWidget {
             Container(
               height: 50,
               decoration: BoxDecoration(
-                color: Colors.amber,
+                color: Theme.of(context).accentColor,
                 border: Border(
                     top: BorderSide(color: Colors.blueGrey[400]!, width: 2)),
               ),

@@ -3,6 +3,7 @@ import 'package:smokedex/core/presentation/device_segment.dart';
 import 'package:smokedex/features/pokedex/presentation/pages/detail_pokemon_page.dart';
 import 'package:smokedex/features/pokedex/presentation/pages/pokedex_page.dart';
 
+import 'core/presentation/themes.dart';
 import 'service_locator.dart';
 
 void main() async {
@@ -16,9 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pokedex',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: AppTheme.fromType(ThemeType.Pokemon).themeData,
       home: PokedexPage(),
       routes: {
         DetailPokemonPage.route: (_) => DetailPokemonPage(),
