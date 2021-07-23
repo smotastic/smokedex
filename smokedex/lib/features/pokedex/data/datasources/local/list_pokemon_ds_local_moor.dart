@@ -25,10 +25,7 @@ class ListPokemonDataSourceLocalMoor extends ListPokemonDataSourceLocal {
     final db = await _database;
 
     await db.into(db.pokemon).insert(
-        PokemonData(
-            id: pokemon.id.toInt(),
-            name: pokemon.name,
-            image: pokemon.imageUrl),
+        PokemonDataMapper.instance.fromModel(pokemon),
         mode: InsertMode.insertOrReplace);
     for (var type in pokemon.types) {
       await db

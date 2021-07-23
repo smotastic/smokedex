@@ -20,3 +20,7 @@ class PokemonEntryMapperImpl extends PokemonEntryMapper {
     return pokemonentry;
   }
 }
+
+class PokemonDataMapperImpl extends PokemonDataMapper {
+  PokemonDataMapperImpl() : super();
+}

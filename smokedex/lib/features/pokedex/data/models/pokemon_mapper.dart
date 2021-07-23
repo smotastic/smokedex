@@ -1,6 +1,7 @@
 import 'package:smartstruct/smartstruct.dart';
 import 'package:smokeapi/smokeapi.dart';
-import 'package:smokedex/features/pokedex/data/models/poke_model.dart';
+import 'package:smokedex/core/data/datasources/local/moor/moor_helper.dart';
+import 'package:smokedex/features/pokedex/data/models/pokemon_model.dart';
 import 'package:smokedex/features/pokedex/domain/entities/pokemon_entry.dart';
 
 part 'pokemon_mapper.mapper.g.dart';
@@ -9,7 +10,7 @@ part 'pokemon_mapper.mapper.g.dart';
 abstract class PokemonMapper {
   static PokemonMapper get instance => PokemonMapperImpl();
 
-  PokemonModel fromModel(PokemonResource model) {
+  PokemonModel fromResource(PokemonResource model) {
     return PokemonModel(
       model.id,
       model.name,
@@ -25,4 +26,19 @@ abstract class PokemonEntryMapper {
   static PokemonEntryMapper get instance => PokemonEntryMapperImpl();
 
   PokemonEntry fromModel(PokemonModel model);
+}
+
+// TODO smartstruct cannot handle PokemonData currently
+@Mapper()
+abstract class PokemonDataMapper {
+  static PokemonDataMapper get instance => PokemonDataMapperImpl();
+
+  PokemonModel fromData(PokemonData data, List<String> types) {
+    return PokemonModel(data.id, data.name, data.image, types);
+  }
+
+  PokemonData fromModel(PokemonModel model) {
+    return PokemonData(
+        id: model.id.toInt(), name: model.name, image: model.imageUrl);
+  }
 }
