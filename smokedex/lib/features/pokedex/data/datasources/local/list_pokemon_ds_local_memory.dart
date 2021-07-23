@@ -8,7 +8,7 @@ import 'package:smokedex/service_locator.dart';
 
 @web
 @LazySingleton(as: ListPokemonDataSourceLocal)
-class ListPokemonDataSourceLocalStub extends ListPokemonDataSourceLocal {
+class ListPokemonDataSourceLocalMemory extends ListPokemonDataSourceLocal {
   @override
   Future<Either<Failure, List<PokeModel>>> list(
       num pageSize, num offset) async {
