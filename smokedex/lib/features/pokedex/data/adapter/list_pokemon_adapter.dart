@@ -37,13 +37,16 @@ class ListPokemonAdapter extends ListPokemonPort {
 
     final result = await dataSourceRemote.list(pageSize, offset);
     // TODO PaginationEntry Mapper
-    return result.fold((l) => Left(UnknownFailure()), (r) {
-      var entries = <PokemonEntry>[];
-      r.forEach((model) {
-        dataSourceLocal.cache(model.id - 1, model);
-        entries.add(PokemonEntryMapper.instance.fromModel(model));
-      });
-      return Right(entries);
-    });
+    return result.fold(
+      (l) => Left(UnknownFailure()),
+      (r) {
+        var entries = <PokemonEntry>[];
+        r.forEach((model) {
+          dataSourceLocal.cache(model.id - 1, model);
+          entries.add(PokemonEntryMapper.instance.fromModel(model));
+        });
+        return Right(entries);
+      },
+    );
   }
 }

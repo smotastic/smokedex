@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import 'package:smokedex/core/data/datasources/local/sqflite_helper.dart';
+import 'package:smokedex/core/data/datasources/local/sqflite/sqflite_helper.dart';
 import 'package:smokedex/core/data/meta/pokemon_meta.dart';
 import 'package:smokedex/core/domain/failure.dart';
 
@@ -11,8 +11,8 @@ import 'package:sqflite/sqflite.dart';
 
 import 'list_pokemon_ds_local.dart';
 
-@mobile
-@LazySingleton(as: ListPokemonDataSourceLocal)
+// @mobile
+// @LazySingleton(as: ListPokemonDataSourceLocal)
 class ListPokemonDataSourceLocalSqlite extends ListPokemonDataSourceLocal {
   late final Future<Database> _database;
 

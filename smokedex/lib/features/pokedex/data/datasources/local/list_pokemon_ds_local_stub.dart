@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:smokedex/core/data/datasources/local/memory_helper.dart';
+import 'package:smokedex/core/data/datasources/local/memory/memory_helper.dart';
 import 'package:smokedex/core/domain/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:smokedex/features/pokedex/data/datasources/local/list_pokemon_ds_local.dart';

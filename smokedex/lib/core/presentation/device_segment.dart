@@ -13,11 +13,11 @@ class DeviceSegment {
   const DeviceSegment(this.name);
 
   bool isWeb() {
-    return this.name == 'web';
+    return this.name == web;
   }
 
   bool isMobile() {
-    return this.name == 'mobile';
+    return this.name == mobile;
   }
 
   static DeviceSegment currentDevice() {
