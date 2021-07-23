@@ -9,7 +9,7 @@ part 'pokemon_mapper.mapper.g.dart';
 abstract class PokemonMapper {
   static PokemonMapper get instance => PokemonMapperImpl();
 
-  PokeModel fromModel(PokemonModel model) {
+  PokeModel fromModel(PokemonResource model) {
     return PokeModel(
       model.id,
       model.name,

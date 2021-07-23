@@ -6,19 +6,19 @@ part of 'pokemodel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PokemonModel _$PokemonModelFromJson(Map<String, dynamic> json) {
-  return PokemonModel(
+PokemonResource _$PokemonModelFromJson(Map<String, dynamic> json) {
+  return PokemonResource(
     json['id'] as int,
     json['name'] as String,
     json['weight'] as int,
     (json['types'] as List<dynamic>)
-        .map((e) => PokemonTypeModel.fromJson(e as Map<String, dynamic>))
+        .map((e) => PokemonTypeResource.fromJson(e as Map<String, dynamic>))
         .toList(),
-    PokemonSpriteModel.fromJson(json['sprites'] as Map<String, dynamic>),
+    PokemonSpriteResource.fromJson(json['sprites'] as Map<String, dynamic>),
   );
 }
 
-Map<String, dynamic> _$PokemonModelToJson(PokemonModel instance) =>
+Map<String, dynamic> _$PokemonModelToJson(PokemonResource instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -27,21 +27,21 @@ Map<String, dynamic> _$PokemonModelToJson(PokemonModel instance) =>
       'sprites': instance.sprites,
     };
 
-PokemonTypeModel _$PokemonTypeModelFromJson(Map<String, dynamic> json) {
-  return PokemonTypeModel(
+PokemonTypeResource _$PokemonTypeModelFromJson(Map<String, dynamic> json) {
+  return PokemonTypeResource(
     json['slot'] as int,
     NamedResourceModel.fromJson(json['type'] as Map<String, dynamic>),
   );
 }
 
-Map<String, dynamic> _$PokemonTypeModelToJson(PokemonTypeModel instance) =>
+Map<String, dynamic> _$PokemonTypeModelToJson(PokemonTypeResource instance) =>
     <String, dynamic>{
       'slot': instance.slot,
       'type': instance.type,
     };
 
-PokemonSpriteModel _$PokemonSpriteModelFromJson(Map<String, dynamic> json) {
-  return PokemonSpriteModel(
+PokemonSpriteResource _$PokemonSpriteModelFromJson(Map<String, dynamic> json) {
+  return PokemonSpriteResource(
     json['back_default'] as String?,
     json['back_female'] as String?,
     json['back_shiny'] as String?,
@@ -51,11 +51,12 @@ PokemonSpriteModel _$PokemonSpriteModelFromJson(Map<String, dynamic> json) {
     json['front_shiny_female'] as String?,
     json['other'] == null
         ? null
-        : SpriteOtherModel.fromJson(json['other'] as Map<String, dynamic>),
+        : SpriteOtherResource.fromJson(json['other'] as Map<String, dynamic>),
   );
 }
 
-Map<String, dynamic> _$PokemonSpriteModelToJson(PokemonSpriteModel instance) =>
+Map<String, dynamic> _$PokemonSpriteModelToJson(
+        PokemonSpriteResource instance) =>
     <String, dynamic>{
       'back_default': instance.backDefault,
       'back_female': instance.backFemale,
@@ -67,48 +68,48 @@ Map<String, dynamic> _$PokemonSpriteModelToJson(PokemonSpriteModel instance) =>
       'other': instance.other,
     };
 
-SpriteOtherModel _$SpriteOtherModelFromJson(Map<String, dynamic> json) {
-  return SpriteOtherModel(
+SpriteOtherResource _$SpriteOtherModelFromJson(Map<String, dynamic> json) {
+  return SpriteOtherResource(
     json['official-artwork'] == null
         ? null
-        : SpriteOfficialArtworkModel.fromJson(
+        : SpriteOfficialArtworkResource.fromJson(
             json['official-artwork'] as Map<String, dynamic>),
     json['dream_world'] == null
         ? null
-        : SpriteDreamWorldModel.fromJson(
+        : SpriteDreamWorldResource.fromJson(
             json['dream_world'] as Map<String, dynamic>),
   );
 }
 
-Map<String, dynamic> _$SpriteOtherModelToJson(SpriteOtherModel instance) =>
+Map<String, dynamic> _$SpriteOtherModelToJson(SpriteOtherResource instance) =>
     <String, dynamic>{
       'official-artwork': instance.officialArtwork,
       'dream_world': instance.dreamWorld,
     };
 
-SpriteOfficialArtworkModel _$SpriteOfficialArtworkModelFromJson(
+SpriteOfficialArtworkResource _$SpriteOfficialArtworkModelFromJson(
     Map<String, dynamic> json) {
-  return SpriteOfficialArtworkModel(
+  return SpriteOfficialArtworkResource(
     json['front_default'] as String?,
   );
 }
 
 Map<String, dynamic> _$SpriteOfficialArtworkModelToJson(
-        SpriteOfficialArtworkModel instance) =>
+        SpriteOfficialArtworkResource instance) =>
     <String, dynamic>{
       'front_default': instance.frontDefault,
     };
 
-SpriteDreamWorldModel _$SpriteDreamWorldModelFromJson(
+SpriteDreamWorldResource _$SpriteDreamWorldModelFromJson(
     Map<String, dynamic> json) {
-  return SpriteDreamWorldModel(
+  return SpriteDreamWorldResource(
     json['front_default'] as String?,
     json['front_female'] as String?,
   );
 }
 
 Map<String, dynamic> _$SpriteDreamWorldModelToJson(
-        SpriteDreamWorldModel instance) =>
+        SpriteDreamWorldResource instance) =>
     <String, dynamic>{
       'front_default': instance.frontDefault,
       'front_female': instance.frontFemale,

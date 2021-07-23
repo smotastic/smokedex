@@ -4,34 +4,34 @@ import 'package:smokeapi/src/models/named_resource.dart';
 part 'pokemodel.g.dart';
 
 @JsonSerializable()
-class PokemonModel extends BaseModel {
+class PokemonResource extends BaseResource {
   final int id;
   final String name;
   final int weight;
-  final List<PokemonTypeModel> types;
-  final PokemonSpriteModel sprites;
+  final List<PokemonTypeResource> types;
+  final PokemonSpriteResource sprites;
 
-  PokemonModel(this.id, this.name, this.weight, this.types, this.sprites);
+  PokemonResource(this.id, this.name, this.weight, this.types, this.sprites);
 
-  factory PokemonModel.fromJson(Map<String, dynamic> json) {
+  factory PokemonResource.fromJson(Map<String, dynamic> json) {
     return _$PokemonModelFromJson(json);
   }
 }
 
 @JsonSerializable()
-class PokemonTypeModel {
+class PokemonTypeResource {
   final int slot;
   final NamedResourceModel type;
 
-  PokemonTypeModel(this.slot, this.type);
+  PokemonTypeResource(this.slot, this.type);
 
-  factory PokemonTypeModel.fromJson(Map<String, dynamic> json) {
+  factory PokemonTypeResource.fromJson(Map<String, dynamic> json) {
     return _$PokemonTypeModelFromJson(json);
   }
 }
 
 @JsonSerializable()
-class PokemonSpriteModel {
+class PokemonSpriteResource {
   @JsonKey(name: 'back_default')
   final String? backDefault;
   @JsonKey(name: 'back_female')
@@ -47,9 +47,9 @@ class PokemonSpriteModel {
   @JsonKey(name: 'front_shiny_female')
   final String? frontShinyFemale;
   @JsonKey(name: 'other')
-  final SpriteOtherModel? other;
+  final SpriteOtherResource? other;
 
-  PokemonSpriteModel(
+  PokemonSpriteResource(
       this.backDefault,
       this.backFemale,
       this.backShiny,
@@ -58,44 +58,44 @@ class PokemonSpriteModel {
       this.frontShiny,
       this.frontShinyFemale,
       this.other);
-  factory PokemonSpriteModel.fromJson(Map<String, dynamic> json) {
+  factory PokemonSpriteResource.fromJson(Map<String, dynamic> json) {
     return _$PokemonSpriteModelFromJson(json);
   }
 }
 
 @JsonSerializable()
-class SpriteOtherModel {
+class SpriteOtherResource {
   @JsonKey(name: 'official-artwork')
-  final SpriteOfficialArtworkModel? officialArtwork;
+  final SpriteOfficialArtworkResource? officialArtwork;
   @JsonKey(name: 'dream_world')
-  final SpriteDreamWorldModel? dreamWorld;
+  final SpriteDreamWorldResource? dreamWorld;
 
-  SpriteOtherModel(this.officialArtwork, this.dreamWorld);
-  factory SpriteOtherModel.fromJson(Map<String, dynamic> json) {
+  SpriteOtherResource(this.officialArtwork, this.dreamWorld);
+  factory SpriteOtherResource.fromJson(Map<String, dynamic> json) {
     return _$SpriteOtherModelFromJson(json);
   }
 }
 
 @JsonSerializable()
-class SpriteOfficialArtworkModel {
+class SpriteOfficialArtworkResource {
   @JsonKey(name: 'front_default')
   final String? frontDefault;
 
-  SpriteOfficialArtworkModel(this.frontDefault);
-  factory SpriteOfficialArtworkModel.fromJson(Map<String, dynamic> json) {
+  SpriteOfficialArtworkResource(this.frontDefault);
+  factory SpriteOfficialArtworkResource.fromJson(Map<String, dynamic> json) {
     return _$SpriteOfficialArtworkModelFromJson(json);
   }
 }
 
 @JsonSerializable()
-class SpriteDreamWorldModel {
+class SpriteDreamWorldResource {
   @JsonKey(name: 'front_default')
   final String? frontDefault;
   @JsonKey(name: 'front_female')
   final String? frontFemale;
 
-  SpriteDreamWorldModel(this.frontDefault, this.frontFemale);
-  factory SpriteDreamWorldModel.fromJson(Map<String, dynamic> json) {
+  SpriteDreamWorldResource(this.frontDefault, this.frontFemale);
+  factory SpriteDreamWorldResource.fromJson(Map<String, dynamic> json) {
     return _$SpriteDreamWorldModelFromJson(json);
   }
 }

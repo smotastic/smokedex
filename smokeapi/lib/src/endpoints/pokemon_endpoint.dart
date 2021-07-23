@@ -5,12 +5,12 @@ import 'package:smokeapi/src/endpoints/base_endpoint.dart';
 import 'package:smokeapi/src/models/pokemodel.dart';
 import 'package:smokeapi/src/models/pagination.dart';
 
-class PokemonEndpoint extends PaginatedEndpoint<PokemonModel> {
+class PokemonEndpoint extends PaginatedEndpoint<PokemonResource> {
   PokemonEndpoint(PokeClient client) : super(client);
 
   @override
-  Future<Either<PokeFailure, PokemonModel>> get(id) async {
-    final result = await client.get<PokemonModel>('pokemon/$id');
+  Future<Either<PokeFailure, PokemonResource>> get(id) async {
+    final result = await client.get<PokemonResource>('pokemon/$id');
     return Right(result);
   }
 

@@ -4,7 +4,7 @@ import 'package:smokeapi/src/models/basemodel.dart';
 part 'named_resource.g.dart';
 
 @JsonSerializable()
-class NamedResourceModel extends BaseModel {
+class NamedResourceModel extends BaseResource {
   static int idMapper(String url) {
     final uri = Uri.parse(url);
     return int.parse(

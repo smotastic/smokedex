@@ -5,10 +5,10 @@ abstract class Converter<T> {
   T fromJson(Map<String, dynamic> json);
 }
 
-class PokemonConverter extends Converter<PokemonModel> {
+class PokemonConverter extends Converter<PokemonResource> {
   @override
-  PokemonModel fromJson(Map<String, dynamic> json) {
-    return PokemonModel.fromJson(json);
+  PokemonResource fromJson(Map<String, dynamic> json) {
+    return PokemonResource.fromJson(json);
   }
 }
 
@@ -22,7 +22,7 @@ class PaginationConverter extends Converter<Pagination> {
 class ConverterFactory {
   final Map<Type, Converter> _converters = Map.unmodifiable(
     {
-      PokemonModel: PokemonConverter(),
+      PokemonResource: PokemonConverter(),
       Pagination: PaginationConverter(),
     },
   );
