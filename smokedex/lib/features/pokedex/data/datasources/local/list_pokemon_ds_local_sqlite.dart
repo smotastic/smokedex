@@ -5,7 +5,7 @@ import 'package:smokedex/core/data/meta/pokemon_meta.dart';
 import 'package:smokedex/core/domain/failure.dart';
 
 import 'package:dartz/dartz.dart';
-import 'package:smokedex/features/pokedex/data/models/poke_model.dart';
+import 'package:smokedex/features/pokedex/data/models/pokemon_model.dart';
 import 'package:smokedex/service_locator.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -21,7 +21,7 @@ class ListPokemonDataSourceLocalSqlite extends ListPokemonDataSourceLocal {
   }
 
   @override
-  Future<Either<Failure, List<PokeModel>>> list(
+  Future<Either<Failure, List<PokemonModel>>> list(
       num pageSize, num offset) async {
     final db = await _database;
     final pokeResult = await db.query(PokemonSqlMeta.table,
@@ -29,13 +29,13 @@ class ListPokemonDataSourceLocalSqlite extends ListPokemonDataSourceLocal {
         offset: offset.toInt(),
         orderBy: PokemonSqlMeta.id);
 
-    var result = <PokeModel>[];
+    var result = <PokemonModel>[];
 
     for (var poke in pokeResult) {
       final types = await db.query(PokemonTypeSqlMeta.table,
           where: '${PokemonTypeSqlMeta.pokemonId} = ?',
           whereArgs: [poke[PokemonSqlMeta.id]]);
-      result.add(PokeModel(
+      result.add(PokemonModel(
         poke[PokemonSqlMeta.id] as int,
         poke[PokemonSqlMeta.name] as String,
         poke[PokemonSqlMeta.image] as String,
@@ -46,8 +46,8 @@ class ListPokemonDataSourceLocalSqlite extends ListPokemonDataSourceLocal {
   }
 
   @override
-  Future<Either<Failure, Map<num, PokeModel>>> cache(
-      num index, PokeModel pokemon) async {
+  Future<Either<Failure, Map<num, PokemonModel>>> cache(
+      num index, PokemonModel pokemon) async {
     final db = await _database;
     await db.insert(
         PokemonSqlMeta.table,

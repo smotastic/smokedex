@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:injectable/injectable.dart';
 import 'package:smokedex/features/pokedex/data/datasources/local/list_pokemon_ds_local.dart';
 import 'package:smokedex/features/pokedex/data/datasources/remote/list_pokemon_ds_remote.dart';
-import 'package:smokedex/features/pokedex/data/models/poke_model.dart';
+import 'package:smokedex/features/pokedex/data/models/pokemon_model.dart';
 import 'package:smokedex/features/pokedex/data/models/pokemon_mapper.dart';
 import 'package:smokedex/features/pokedex/domain/entities/pokemon_entry.dart';
 import 'package:smokedex/core/domain/failure.dart';
@@ -23,7 +23,7 @@ class ListPokemonAdapter extends ListPokemonPort {
     // first check locally
     final localResult = await dataSourceLocal.list(pageSize, offset);
 
-    List<PokeModel> pokemon;
+    List<PokemonModel> pokemon;
     if (localResult.isRight()) {
       final localPokemon = localResult.getOrElse(() => throw UnknownFailure());
       // very simple check, could also check all matching id's of local pokemon and only request missing ones

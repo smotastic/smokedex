@@ -14,7 +14,7 @@ class PokemonEntryMapperImpl extends PokemonEntryMapper {
   PokemonEntryMapperImpl() : super();
 
   @override
-  PokemonEntry fromModel(PokeModel model) {
+  PokemonEntry fromModel(PokemonModel model) {
     final pokemonentry = PokemonEntry(model.name, model.id, model.imageUrl,
         model.types.map((e) => e).toList());
     return pokemonentry;

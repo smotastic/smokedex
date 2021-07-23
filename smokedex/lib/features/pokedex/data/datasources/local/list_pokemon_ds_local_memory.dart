@@ -3,24 +3,24 @@ import 'package:smokedex/core/data/datasources/local/memory/memory_helper.dart';
 import 'package:smokedex/core/domain/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:smokedex/features/pokedex/data/datasources/local/list_pokemon_ds_local.dart';
-import 'package:smokedex/features/pokedex/data/models/poke_model.dart';
+import 'package:smokedex/features/pokedex/data/models/pokemon_model.dart';
 import 'package:smokedex/service_locator.dart';
 
 @web
 @LazySingleton(as: ListPokemonDataSourceLocal)
 class ListPokemonDataSourceLocalMemory extends ListPokemonDataSourceLocal {
   @override
-  Future<Either<Failure, List<PokeModel>>> list(
+  Future<Either<Failure, List<PokemonModel>>> list(
       num pageSize, num offset) async {
     final db = await MemoryHelper.I.database;
-    var result = <PokeModel>[];
+    var result = <PokemonModel>[];
     numberGenerator
         .skip(offset.toInt())
         .take(pageSize.toInt())
         .forEach((element) {
       if (db.containsKey(element)) {
         final poke = db[element]!;
-        result.add(PokeModel(
+        result.add(PokemonModel(
             poke['id'], poke['name'], poke['imageUrl'], poke['types']));
       }
     });
@@ -34,8 +34,8 @@ class ListPokemonDataSourceLocalMemory extends ListPokemonDataSourceLocal {
   }
 
   @override
-  Future<Either<Failure, Map<num, PokeModel>>> cache(
-      num index, PokeModel pokemon) async {
+  Future<Either<Failure, Map<num, PokemonModel>>> cache(
+      num index, PokemonModel pokemon) async {
     final db = await MemoryHelper.I.database;
     db.putIfAbsent(
         index,
