@@ -24,6 +24,15 @@ class ListPokemonDataSourceRemoteImpl extends ListPokemonDataSourceRemote {
   Future<PokemonModel> _fromResultEntry(NamedResourceModel resultEntry) async {
     final result = await PokeApi().pokemon().get(resultEntry.id);
     final pokemon = result.getOrElse(() => throw UnknownFailure());
-    return PokemonMapper.instance.fromResource(pokemon);
+
+    var abilities = <PokemonAbilityResource>[];
+    for (var namedResourceAbility in pokemon.abilities) {
+      final ability =
+          await PokeApi().ability().get(namedResourceAbility.ability.id);
+      abilities.add(ability.getOrElse(() => throw UnknownFailure()));
+    }
+
+    pokemon.abilities.map((element) {});
+    return PokemonMapper.instance.fromResource(pokemon, abilities);
   }
 }

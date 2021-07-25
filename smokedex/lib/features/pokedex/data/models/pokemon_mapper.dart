@@ -10,7 +10,9 @@ part 'pokemon_mapper.mapper.g.dart';
 abstract class PokemonMapper {
   static PokemonMapper get instance => PokemonMapperImpl();
 
-  PokemonModel fromResource(PokemonResource model) {
+  PokemonModel fromResource(
+      PokemonResource model, List<PokemonAbilityResource> abilities) {
+    // TODO use Abilities
     return PokemonModel(
       model.id,
       model.name,
@@ -28,7 +30,6 @@ abstract class PokemonEntryMapper {
   PokemonEntry fromModel(PokemonModel model);
 }
 
-// TODO smartstruct cannot handle PokemonData currently
 @Mapper()
 abstract class PokemonDataMapper {
   static PokemonDataMapper get instance => PokemonDataMapperImpl();
