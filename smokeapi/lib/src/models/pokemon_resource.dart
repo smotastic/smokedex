@@ -1,20 +1,38 @@
-import 'package:smokeapi/src/models/basemodel.dart';
+import 'package:smokeapi/src/models/base_resource.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:smokeapi/src/models/named_resource.dart';
-part 'pokemodel.g.dart';
+part 'pokemon_resource.g.dart';
 
 @JsonSerializable()
 class PokemonResource extends BaseResource {
   final int id;
   final String name;
   final int weight;
+  @JsonKey(name: 'base_experience')
+  final int baseExperience;
   final List<PokemonTypeResource> types;
   final PokemonSpriteResource sprites;
+  final List<PokemonAbilityResource> abilities;
 
-  PokemonResource(this.id, this.name, this.weight, this.types, this.sprites);
+  PokemonResource(this.id, this.name, this.weight, this.baseExperience,
+      this.types, this.sprites, this.abilities);
 
   factory PokemonResource.fromJson(Map<String, dynamic> json) {
-    return _$PokemonModelFromJson(json);
+    return _$PokemonResourceFromJson(json);
+  }
+}
+
+@JsonSerializable()
+class PokemonAbilityResource {
+  final NamedResourceModel ability;
+  @JsonKey(name: 'is_hidden')
+  final bool isHidden;
+  final int slot;
+
+  PokemonAbilityResource(this.ability, this.isHidden, this.slot);
+
+  factory PokemonAbilityResource.fromJson(Map<String, dynamic> json) {
+    return _$PokemonAbilityResourceFromJson(json);
   }
 }
 
@@ -26,7 +44,7 @@ class PokemonTypeResource {
   PokemonTypeResource(this.slot, this.type);
 
   factory PokemonTypeResource.fromJson(Map<String, dynamic> json) {
-    return _$PokemonTypeModelFromJson(json);
+    return _$PokemonTypeResourceFromJson(json);
   }
 }
 
@@ -59,7 +77,7 @@ class PokemonSpriteResource {
       this.frontShinyFemale,
       this.other);
   factory PokemonSpriteResource.fromJson(Map<String, dynamic> json) {
-    return _$PokemonSpriteModelFromJson(json);
+    return _$PokemonSpriteResourceFromJson(json);
   }
 }
 
@@ -72,7 +90,7 @@ class SpriteOtherResource {
 
   SpriteOtherResource(this.officialArtwork, this.dreamWorld);
   factory SpriteOtherResource.fromJson(Map<String, dynamic> json) {
-    return _$SpriteOtherModelFromJson(json);
+    return _$SpriteOtherResourceFromJson(json);
   }
 }
 
@@ -83,7 +101,7 @@ class SpriteOfficialArtworkResource {
 
   SpriteOfficialArtworkResource(this.frontDefault);
   factory SpriteOfficialArtworkResource.fromJson(Map<String, dynamic> json) {
-    return _$SpriteOfficialArtworkModelFromJson(json);
+    return _$SpriteOfficialArtworkResourceFromJson(json);
   }
 }
 
@@ -96,6 +114,6 @@ class SpriteDreamWorldResource {
 
   SpriteDreamWorldResource(this.frontDefault, this.frontFemale);
   factory SpriteDreamWorldResource.fromJson(Map<String, dynamic> json) {
-    return _$SpriteDreamWorldModelFromJson(json);
+    return _$SpriteDreamWorldResourceFromJson(json);
   }
 }

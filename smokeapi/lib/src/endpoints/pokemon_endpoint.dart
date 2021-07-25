@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:smokeapi/src/client.dart';
 import 'package:smokeapi/src/core/failure.dart';
 import 'package:smokeapi/src/endpoints/base_endpoint.dart';
-import 'package:smokeapi/src/models/pokemodel.dart';
+import 'package:smokeapi/src/models/pokemon_resource.dart';
 import 'package:smokeapi/src/models/pagination.dart';
 
 class PokemonEndpoint extends PaginatedEndpoint<PokemonResource> {
