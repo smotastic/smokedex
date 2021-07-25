@@ -10,9 +10,9 @@ class PokemonResource extends BaseResource {
   final int weight;
   @JsonKey(name: 'base_experience')
   final int baseExperience;
-  final List<PokemonTypeResource> types;
+  final List<PokemonTypeNamedResource> types;
   final PokemonSpriteResource sprites;
-  final List<PokemonAbilityResource> abilities;
+  final List<PokemonAbilityNamedResource> abilities;
 
   PokemonResource(this.id, this.name, this.weight, this.baseExperience,
       this.types, this.sprites, this.abilities);
@@ -23,28 +23,28 @@ class PokemonResource extends BaseResource {
 }
 
 @JsonSerializable()
-class PokemonAbilityResource {
+class PokemonAbilityNamedResource {
   final NamedResourceModel ability;
   @JsonKey(name: 'is_hidden')
   final bool isHidden;
   final int slot;
 
-  PokemonAbilityResource(this.ability, this.isHidden, this.slot);
+  PokemonAbilityNamedResource(this.ability, this.isHidden, this.slot);
 
-  factory PokemonAbilityResource.fromJson(Map<String, dynamic> json) {
-    return _$PokemonAbilityResourceFromJson(json);
+  factory PokemonAbilityNamedResource.fromJson(Map<String, dynamic> json) {
+    return _$PokemonAbilityNamedResourceFromJson(json);
   }
 }
 
 @JsonSerializable()
-class PokemonTypeResource {
+class PokemonTypeNamedResource {
   final int slot;
   final NamedResourceModel type;
 
-  PokemonTypeResource(this.slot, this.type);
+  PokemonTypeNamedResource(this.slot, this.type);
 
-  factory PokemonTypeResource.fromJson(Map<String, dynamic> json) {
-    return _$PokemonTypeResourceFromJson(json);
+  factory PokemonTypeNamedResource.fromJson(Map<String, dynamic> json) {
+    return _$PokemonTypeNamedResourceFromJson(json);
   }
 }
 

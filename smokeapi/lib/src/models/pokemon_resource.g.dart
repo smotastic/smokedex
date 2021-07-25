@@ -13,11 +13,13 @@ PokemonResource _$PokemonResourceFromJson(Map<String, dynamic> json) {
     json['weight'] as int,
     json['base_experience'] as int,
     (json['types'] as List<dynamic>)
-        .map((e) => PokemonTypeResource.fromJson(e as Map<String, dynamic>))
+        .map(
+            (e) => PokemonTypeNamedResource.fromJson(e as Map<String, dynamic>))
         .toList(),
     PokemonSpriteResource.fromJson(json['sprites'] as Map<String, dynamic>),
     (json['abilities'] as List<dynamic>)
-        .map((e) => PokemonAbilityResource.fromJson(e as Map<String, dynamic>))
+        .map((e) =>
+            PokemonAbilityNamedResource.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
 }
@@ -33,32 +35,33 @@ Map<String, dynamic> _$PokemonResourceToJson(PokemonResource instance) =>
       'abilities': instance.abilities,
     };
 
-PokemonAbilityResource _$PokemonAbilityResourceFromJson(
+PokemonAbilityNamedResource _$PokemonAbilityNamedResourceFromJson(
     Map<String, dynamic> json) {
-  return PokemonAbilityResource(
+  return PokemonAbilityNamedResource(
     NamedResourceModel.fromJson(json['ability'] as Map<String, dynamic>),
     json['is_hidden'] as bool,
     json['slot'] as int,
   );
 }
 
-Map<String, dynamic> _$PokemonAbilityResourceToJson(
-        PokemonAbilityResource instance) =>
+Map<String, dynamic> _$PokemonAbilityNamedResourceToJson(
+        PokemonAbilityNamedResource instance) =>
     <String, dynamic>{
       'ability': instance.ability,
       'is_hidden': instance.isHidden,
       'slot': instance.slot,
     };
 
-PokemonTypeResource _$PokemonTypeResourceFromJson(Map<String, dynamic> json) {
-  return PokemonTypeResource(
+PokemonTypeNamedResource _$PokemonTypeNamedResourceFromJson(
+    Map<String, dynamic> json) {
+  return PokemonTypeNamedResource(
     json['slot'] as int,
     NamedResourceModel.fromJson(json['type'] as Map<String, dynamic>),
   );
 }
 
-Map<String, dynamic> _$PokemonTypeResourceToJson(
-        PokemonTypeResource instance) =>
+Map<String, dynamic> _$PokemonTypeNamedResourceToJson(
+        PokemonTypeNamedResource instance) =>
     <String, dynamic>{
       'slot': instance.slot,
       'type': instance.type,
