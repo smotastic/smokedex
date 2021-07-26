@@ -1,5 +1,6 @@
 import 'package:smokeapi/smokeapi.dart';
 import 'package:smokeapi/src/models/pagination.dart';
+import 'package:smokeapi/src/models/pokemon_type_resource.dart';
 
 import 'models/pokemon_ability_resource.dart';
 
@@ -21,6 +22,13 @@ class PokemonAbilityConverter extends Converter<PokemonAbilityResource> {
   }
 }
 
+class PokemonTypeConverter extends Converter<PokemonTypeResource> {
+  @override
+  PokemonTypeResource fromJson(Map<String, dynamic> json) {
+    return PokemonTypeResource.fromJson(json);
+  }
+}
+
 class PaginationConverter extends Converter<Pagination> {
   @override
   Pagination fromJson(Map<String, dynamic> json) {
@@ -33,6 +41,7 @@ class ConverterFactory {
     {
       PokemonResource: PokemonConverter(),
       PokemonAbilityResource: PokemonAbilityConverter(),
+      PokemonTypeResource: PokemonTypeConverter(),
       Pagination: PaginationConverter(),
     },
   );

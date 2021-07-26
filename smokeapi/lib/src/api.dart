@@ -1,6 +1,7 @@
 import 'package:smokeapi/src/client.dart';
 import 'package:smokeapi/src/endpoints/pokemon_ability_endpoint.dart';
 import 'package:smokeapi/src/endpoints/pokemon_endpoint.dart';
+import 'package:smokeapi/src/endpoints/pokemon_type_endpoint.dart';
 
 class PokeApi extends PokeApiCalls {
   final PokeClient client;
@@ -17,9 +18,15 @@ class PokeApi extends PokeApiCalls {
   PokemonAbilityEndpoint ability() {
     return PokemonAbilityEndpoint(client);
   }
+
+  @override
+  PokemonTypeEndpoint type() {
+    return PokemonTypeEndpoint(client);
+  }
 }
 
 abstract class PokeApiCalls {
   PokemonEndpoint pokemon();
   PokemonAbilityEndpoint ability();
+  PokemonTypeEndpoint type();
 }
