@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:smokedex/features/pokedex/data/datasources/local/list_pokemon_ds_local.dart';
 import 'package:smokedex/features/pokedex/data/datasources/remote/list_pokemon_ds_remote.dart';
 import 'package:smokedex/features/pokedex/data/models/pokemon_model.dart';
-import 'package:smokedex/features/pokedex/data/models/pokemon_mapper.dart';
+import 'package:smokedex/features/pokedex/data/models/pokemon_model_mapper.dart';
 import 'package:smokedex/features/pokedex/domain/entities/pokemon_entry.dart';
 import 'package:smokedex/core/domain/failure.dart';
 import 'package:dartz/dartz.dart';

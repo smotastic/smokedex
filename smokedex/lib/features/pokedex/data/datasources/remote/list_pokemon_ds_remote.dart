@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:smokeapi/smokeapi.dart';
 import 'package:smokedex/core/domain/failure.dart';
 import 'package:smokedex/features/pokedex/data/models/pokemon_model.dart';
-import 'package:smokedex/features/pokedex/data/models/pokemon_mapper.dart';
+import 'package:smokedex/features/pokedex/data/models/pokemon_model_mapper.dart';
 
 abstract class ListPokemonDataSourceRemote {
   Future<Either<Failure, List<PokemonModel>>> list(num pageSize, num offset);
