@@ -12,6 +12,7 @@ import 'package:smokedex/service_locator.dart';
 import 'list_pokemon_ds_local.dart';
 
 @mobile
+@web
 @LazySingleton(as: ListPokemonDataSourceLocal)
 class ListPokemonDataSourceLocalMoor extends ListPokemonDataSourceLocal {
   late final Future<Database> _database;
