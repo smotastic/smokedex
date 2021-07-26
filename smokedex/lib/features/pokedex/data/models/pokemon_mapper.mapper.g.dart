@@ -24,3 +24,14 @@ class PokemonEntryMapperImpl extends PokemonEntryMapper {
 class PokemonDataMapperImpl extends PokemonDataMapper {
   PokemonDataMapperImpl() : super();
 }
+
+class PokemonAbilityDataMapperImpl extends PokemonAbilityDataMapper {
+  PokemonAbilityDataMapperImpl() : super();
+
+  @override
+  PokemonAbilityModel fromData(PokemonAbilityData data) {
+    final pokemonabilitymodel = PokemonAbilityModel(
+        data.name, data.effect, data.shortEffect, data.language);
+    return pokemonabilitymodel;
+  }
+}

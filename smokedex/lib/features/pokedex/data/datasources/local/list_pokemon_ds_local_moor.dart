@@ -46,11 +46,16 @@ class ListPokemonDataSourceLocalMoor extends ListPokemonDataSourceLocal {
 
     final result = await select.get();
     for (var pokeData in result) {
+      // POKEMON TYPES
       final typeSelect = db.select((db.pokemonType))
         ..where((tbl) => tbl.pokemonId.equals(pokeData.id));
       final types = await typeSelect.get();
-      ret.add(PokemonDataMapper.instance
-          .fromData(pokeData, types.map((data) => data.type).toList()));
+      // POKEMON ABILITES
+      final abilitySelect = db.select((db.pokemonAbility))
+        ..where((tbl) => tbl.pokemonId.equals(pokeData.id));
+      final abilities = await abilitySelect.get();
+      ret.add(PokemonDataMapper.instance.fromData(
+          pokeData, types.map((data) => data.type).toList(), abilities));
     }
     return Right(ret);
   }

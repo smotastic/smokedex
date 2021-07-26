@@ -35,12 +35,12 @@ class ListPokemonDataSourceLocalSqlite extends ListPokemonDataSourceLocal {
       final types = await db.query(PokemonTypeSqlMeta.table,
           where: '${PokemonTypeSqlMeta.pokemonId} = ?',
           whereArgs: [poke[PokemonSqlMeta.id]]);
-      result.add(PokemonModel(
-        poke[PokemonSqlMeta.id] as int,
-        poke[PokemonSqlMeta.name] as String,
-        poke[PokemonSqlMeta.image] as String,
-        types.map((e) => e[PokemonTypeSqlMeta.type] as String).toList(),
-      ));
+      // result.add(PokemonModel(
+      //   poke[PokemonSqlMeta.id] as int,
+      //   poke[PokemonSqlMeta.name] as String,
+      //   poke[PokemonSqlMeta.image] as String,
+      //   types.map((e) => e[PokemonTypeSqlMeta.type] as String).toList(),
+      // ));
     }
     return Right(result);
   }

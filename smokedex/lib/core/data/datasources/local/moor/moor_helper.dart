@@ -18,6 +18,8 @@ class Pokemon extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text()();
   TextColumn get image => text()();
+  IntColumn get weight => integer()();
+  IntColumn get baseExperience => integer()();
 }
 
 class PokemonType extends Table {
@@ -26,8 +28,17 @@ class PokemonType extends Table {
       integer().customConstraint('NOT NULL REFERENCES pokemon (id)')();
 }
 
+class PokemonAbility extends Table {
+  TextColumn get name => text()();
+  TextColumn get effect => text()();
+  TextColumn get shortEffect => text()();
+  TextColumn get language => text()();
+  IntColumn get pokemonId =>
+      integer().customConstraint('NOT NULL REFERENCES pokemon (id)')();
+}
+
 @UseMoor(
-  tables: [Pokemon, PokemonType],
+  tables: [Pokemon, PokemonType, PokemonAbility],
 )
 class Database extends _$Database {
   Database(QueryExecutor e) : super(e);

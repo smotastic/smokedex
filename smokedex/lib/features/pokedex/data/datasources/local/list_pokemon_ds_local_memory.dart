@@ -21,7 +21,13 @@ class ListPokemonDataSourceLocalMemory extends ListPokemonDataSourceLocal {
       if (db.containsKey(element)) {
         final poke = db[element]!;
         result.add(PokemonModel(
-            poke['id'], poke['name'], poke['imageUrl'], poke['types']));
+            poke['id'],
+            poke['name'],
+            poke['weight'],
+            poke['baseExperience'],
+            poke['imageUrl'],
+            poke['types'],
+            poke['abilities']));
       }
     });
 
@@ -43,7 +49,10 @@ class ListPokemonDataSourceLocalMemory extends ListPokemonDataSourceLocal {
               'id': pokemon.id,
               'name': pokemon.name,
               'imageUrl': pokemon.imageUrl,
-              'types': pokemon.types
+              'weight': pokemon.weight,
+              'baseExperience': pokemon.baseExperience,
+              'types': pokemon.types,
+              'abilities': pokemon.abilities
             });
     return Right({index: pokemon});
   }

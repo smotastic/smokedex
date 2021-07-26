@@ -32,7 +32,12 @@ class ListPokemonDataSourceRemoteImpl extends ListPokemonDataSourceRemote {
       abilities.add(ability.getOrElse(() => throw UnknownFailure()));
     }
 
-    pokemon.abilities.map((element) {});
-    return PokemonMapper.instance.fromResource(pokemon, abilities);
+    var types = <PokemonTypeResource>[];
+    for (var typeResource in pokemon.types) {
+      final type = await PokeApi().type().get(typeResource.type.id);
+      types.add(type.getOrElse(() => throw UnknownFailure()));
+    }
+
+    return PokemonMapper.instance.fromResource(pokemon, types, abilities);
   }
 }
