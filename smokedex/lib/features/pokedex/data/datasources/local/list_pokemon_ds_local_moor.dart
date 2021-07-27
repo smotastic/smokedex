@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:moor/moor.dart';
 import 'package:smokedex/core/data/datasources/local/moor/moor_helper.dart';
-import 'package:smokedex/features/pokedex/data/models/pokemon_mapper.dart';
+import 'package:smokedex/features/pokedex/data/models/pokemon_data_mapper.dart';
 import 'package:smokedex/features/pokedex/data/models/pokemon_model.dart';
 
 import 'package:smokedex/core/domain/failure.dart';

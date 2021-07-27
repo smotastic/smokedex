@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:injectable/injectable.dart';
 import 'package:smokedex/features/pokedex/data/datasources/local/list_pokemon_ds_local.dart';
+import 'package:smokedex/features/pokedex/data/datasources/remote/cache_pokemon_ds_remote.dart';
 import 'package:smokedex/features/pokedex/data/datasources/remote/list_pokemon_ds_remote.dart';
 import 'package:smokedex/features/pokedex/data/models/pokemon_model.dart';
 import 'package:smokedex/features/pokedex/data/models/pokemon_model_mapper.dart';
@@ -14,8 +15,10 @@ import 'package:smokedex/features/pokedex/domain/ports/list_pokemon_port.dart';
 class ListPokemonAdapter extends ListPokemonPort {
   ListPokemonDataSourceLocal dataSourceLocal;
   ListPokemonDataSourceRemote dataSourceRemote;
+  CachePokemonDataSourceRemote cacheDataSourceRemote;
 
-  ListPokemonAdapter(this.dataSourceLocal, this.dataSourceRemote);
+  ListPokemonAdapter(
+      this.dataSourceLocal, this.dataSourceRemote, this.cacheDataSourceRemote);
 
   @override
   Future<Either<Failure, List<PokemonEntry>>> list(
@@ -36,13 +39,13 @@ class ListPokemonAdapter extends ListPokemonPort {
     }
 
     final result = await dataSourceRemote.list(pageSize, offset);
-    // TODO PaginationEntry Mapper
     return result.fold(
       (l) => Left(UnknownFailure()),
       (r) {
         var entries = <PokemonEntry>[];
         r.forEach((model) {
           dataSourceLocal.cache(model.id - 1, model);
+          cacheDataSourceRemote.cache(model);
           entries.add(PokemonEntryMapper.instance.fromModel(model));
         });
         return Right(entries);
