@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:smokedex/core/data/config.dart';
@@ -23,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pokedex',
-      theme: AppTheme.fromType(ThemeType.Pokemon).themeData,
+      theme: AppTheme.fromType(ThemeType.Pokemon_Dark).themeData,
       home: PokedexPage(),
       routes: {
         DetailPokemonPage.route: (_) => DetailPokemonPage(),
