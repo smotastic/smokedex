@@ -37,6 +37,10 @@ abstract class PokemonTypeDataMapper {
   String fromData(PokemonTypeData data) {
     return data.type;
   }
+
+  PokemonTypeData fromModel(String type, int pokemonId) {
+    return PokemonTypeData(type: type, pokemonId: pokemonId);
+  }
 }
 
 @Mapper()
@@ -45,4 +49,13 @@ abstract class PokemonAbilityDataMapper {
       PokemonAbilityDataMapperImpl();
 
   PokemonAbilityModel fromData(PokemonAbilityData data);
+
+  PokemonAbilityData fromModel(PokemonAbilityModel model, int pokemonId) {
+    return PokemonAbilityData(
+        name: model.name,
+        effect: model.effect,
+        shortEffect: model.shortEffect,
+        language: model.language,
+        pokemonId: pokemonId);
+  }
 }
