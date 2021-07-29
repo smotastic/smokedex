@@ -29,9 +29,12 @@ class ListPokemonDataSourceLocalMoor extends ListPokemonDataSourceLocal {
         PokemonDataMapper.instance.fromModel(pokemon),
         mode: InsertMode.insertOrReplace);
     for (var type in pokemon.types) {
-      await db
-          .into(db.pokemonType)
-          .insert(PokemonTypeData(type: type, pokemonId: pokemon.id.toInt()));
+      await db.into(db.pokemonType).insert(
+          PokemonTypeDataMapper.instance.fromModel(type, pokemon.id.toInt()));
+    }
+    for (var ability in pokemon.abilities) {
+      await db.into(db.pokemonAbility).insert(PokemonAbilityDataMapper.instance
+          .fromModel(ability, pokemon.id.toInt()));
     }
     return Right({index: pokemon});
   }
