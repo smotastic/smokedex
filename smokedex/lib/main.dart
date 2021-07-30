@@ -12,8 +12,22 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await Config.I.init();
-  await configureDependencies({DeviceSegment.currentDevice().name});
+  final String dataSourceEnv = fetchDataSourceByDevice();
+  await configureDependencies({
+    DeviceSegment.currentDevice.name,
+    dataSourceEnv,
+  });
   runApp(MyApp());
+}
+
+String fetchDataSourceByDevice() {
+  String ret = memory.name; // default
+  if (DeviceSegment.currentDevice.isMobile()) {
+    ret = Config.I.get('LOCAL_DATASOURCE_MOBILE') ?? moor.name;
+  } else if (DeviceSegment.currentDevice.isWeb()) {
+    ret = Config.I.get('LOCAL_DATASOURCE_WEB') ?? moor.name;
+  }
+  return ret;
 }
 
 class MyApp extends StatelessWidget {

@@ -12,7 +12,7 @@ class SupabaseHelper {
   }
 
   SupabaseClient initDb() {
-    return SupabaseClient(
-        Config.I.get('SUPABASE_URL'), Config.I.get('SUPABASE_API_KEY'));
+    return SupabaseClient(Config.I.get('SUPABASE_URL') ?? '',
+        Config.I.get('SUPABASE_API_KEY') ?? '');
   }
 }

@@ -20,7 +20,7 @@ class DeviceSegment {
     return this.name == mobile;
   }
 
-  static DeviceSegment currentDevice() {
+  static DeviceSegment get currentDevice {
     if (kIsWeb) {
       return webDevice;
     }

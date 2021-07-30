@@ -6,8 +6,8 @@ import 'package:smokedex/features/pokedex/data/datasources/local/list_pokemon_ds
 import 'package:smokedex/features/pokedex/data/models/pokemon_model.dart';
 import 'package:smokedex/service_locator.dart';
 
-// @web
-// @LazySingleton(as: ListPokemonDataSourceLocal)
+@memory
+@LazySingleton(as: ListPokemonDataSourceLocal)
 class ListPokemonDataSourceLocalMemory extends ListPokemonDataSourceLocal {
   @override
   Future<Either<Failure, List<PokemonModel>>> list(

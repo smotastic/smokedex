@@ -18,7 +18,7 @@ class Config {
     _config = _ConfigHelper._(config);
   }
 
-  String get(String key) {
+  String? get(String key) {
     return _config!.get(key);
   }
 }
@@ -27,7 +27,7 @@ class _ConfigHelper {
   final Map<String, String> _config;
   _ConfigHelper._(this._config);
 
-  String get(String key) {
-    return _config[key]!;
+  String? get(String key) {
+    return _config[key];
   }
 }

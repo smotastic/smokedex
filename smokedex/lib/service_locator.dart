@@ -13,5 +13,11 @@ final getIt = GetIt.instance;
 const mobile = const Environment(DeviceSegment.mobile);
 const web = const Environment(DeviceSegment.web);
 
-Future<void> configureDependencies(Set<String> environments) async =>
-    $initGetIt(getIt, environmentFilter: NoEnvOrContainsAny(environments));
+const moor = const Environment('moor');
+const sqlite = const Environment('sqlite');
+const memory = const Environment('memory');
+
+Future<void> configureDependencies(Set<String> environments) async {
+  print(environments);
+  $initGetIt(getIt, environmentFilter: NoEnvOrContainsAny(environments));
+}

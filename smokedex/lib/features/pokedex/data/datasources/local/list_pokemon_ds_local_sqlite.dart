@@ -11,8 +11,8 @@ import 'package:sqflite/sqflite.dart';
 
 import 'list_pokemon_ds_local.dart';
 
-// @mobile
-// @LazySingleton(as: ListPokemonDataSourceLocal)
+@sqlite
+@LazySingleton(as: ListPokemonDataSourceLocal)
 class ListPokemonDataSourceLocalSqlite extends ListPokemonDataSourceLocal {
   late final Future<Database> _database;
 
