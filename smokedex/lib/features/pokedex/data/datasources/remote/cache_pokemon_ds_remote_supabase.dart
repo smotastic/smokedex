@@ -27,7 +27,7 @@ class CachePokemonDataSourceRemoteSupabase
       return Left(CachePokemonFailure());
     }
     final id = result[0]['id']!;
-
+    // ABILITY
     final abilityUpserts = model.abilities.map(
       (ability) => db.from('pokemon_ability').upsert({
         'name': ability.name,
@@ -39,11 +39,60 @@ class CachePokemonDataSourceRemoteSupabase
     );
     await Future.wait(abilityUpserts);
 
+    // TYPES
     final typeUpserts = model.types.map(
       (type) => db.from('pokemon_type').upsert({'type': type, 'pokemon_id': id},
           ignoreDuplicates: true).execute(),
     );
     await Future.wait(typeUpserts);
+
+    // STATS
+    for (var stat in model.stats) {
+      final existingStatResp = await db
+          .from('stat')
+          .select('id')
+          .filter('name', 'eq', stat.name)
+          .execute();
+
+      int? statId;
+      // first check for existing stat
+      if (existingStatResp.error == null) {
+        final existingStat = existingStatResp.data as List<dynamic>;
+        if (existingStat.isNotEmpty) {
+          statId = existingStat[0]['id'];
+        }
+      }
+      // if not there, create it
+      if (statId == null) {
+        final statResp = await db.from('stat').upsert({'name': stat.name},
+            ignoreDuplicates: true, onConflict: 'name').execute();
+        final statResult = statResp.data as List<dynamic>;
+        if (statResult.isNotEmpty) {
+          statId = statResult[0]['id']!;
+        }
+      }
+
+      await db.from('pokemon_stat').upsert({
+        'basestat': stat.baseStat,
+        'effort': stat.effort,
+        'pokemon_id': id,
+        'stat_id': statId
+      }).execute();
+    }
+
+    // // ITEMS
+    // for (var item in model.heldItems) {
+    //   final itemResp = await db
+    //       .from('item')
+    //       .upsert({'name': item.name}, ignoreDuplicates: true).execute();
+    //   final itemResult = itemResp.data as List<dynamic>;
+    //   if (itemResult.isNotEmpty) {
+    //     final itemId = itemResult[0]['id']!;
+    //     await db
+    //         .from('pokemon_item')
+    //         .upsert({'pokemon_id': id, 'item_id': itemId}).execute();
+    //   }
+    // }
 
     return Right(true);
   }
