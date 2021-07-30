@@ -13,6 +13,7 @@ class CachePokemonDataSourceRemoteSupabase
   Future<Either<Failure, bool>> cache(PokemonModel model) async {
     final db = await SupabaseHelper.I.database;
     final response = await db.from('pokemon').upsert({
+      'num': model.id,
       'name': model.name,
       'weight': model.weight,
       'baseexperience': model.baseExperience
