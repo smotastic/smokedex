@@ -29,6 +29,20 @@ class PokemonTypeConverter extends Converter<PokemonTypeResource> {
   }
 }
 
+class StatConverter extends Converter<StatResource> {
+  @override
+  StatResource fromJson(Map<String, dynamic> json) {
+    return StatResource.fromJson(json);
+  }
+}
+
+class ItemConverter extends Converter<ItemResource> {
+  @override
+  ItemResource fromJson(Map<String, dynamic> json) {
+    return ItemResource.fromJson(json);
+  }
+}
+
 class PaginationConverter extends Converter<Pagination> {
   @override
   Pagination fromJson(Map<String, dynamic> json) {
@@ -42,6 +56,8 @@ class ConverterFactory {
       PokemonResource: PokemonConverter(),
       PokemonAbilityResource: PokemonAbilityConverter(),
       PokemonTypeResource: PokemonTypeConverter(),
+      StatResource: StatConverter(),
+      ItemResource: ItemConverter(),
       Pagination: PaginationConverter(),
     },
   );
