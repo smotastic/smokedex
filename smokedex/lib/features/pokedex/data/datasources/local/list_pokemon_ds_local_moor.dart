@@ -35,6 +35,26 @@ class ListPokemonDataSourceLocalMoor extends ListPokemonDataSourceLocal {
       await db.into(db.pokemonAbility).insert(PokemonAbilityDataMapper.instance
           .fromModel(ability, pokemon.id.toInt()));
     }
+
+    for (var item in pokemon.heldItems) {
+      final id = await db.into(db.item).insert(
+          ItemDataMapper.instance.fromModel(item),
+          mode: InsertMode.insertOrReplace);
+      await db.into(db.pokemonItem).insert(
+            PokemonItemDataMapper.instance.forMapping(pokemon.id.toInt(), id),
+          );
+    }
+
+    for (var stat in pokemon.stats) {
+      final id = await db.into(db.stat).insert(
+          StatDataMapper.instance.fromModel(stat),
+          mode: InsertMode.insertOrReplace);
+      await db.into(db.pokemonStat).insert(
+            PokemonStatDataMapper.instance
+                .fromModel(stat, pokemon.id.toInt(), id),
+          );
+    }
+
     return Right({index: pokemon});
   }
 
@@ -52,11 +72,31 @@ class ListPokemonDataSourceLocalMoor extends ListPokemonDataSourceLocal {
       final typeSelect = db.select((db.pokemonType))
         ..where((tbl) => tbl.pokemonId.equals(pokeData.id));
       final types = await typeSelect.get();
+
       // POKEMON ABILITES
       final abilitySelect = db.select((db.pokemonAbility))
         ..where((tbl) => tbl.pokemonId.equals(pokeData.id));
       final abilities = await abilitySelect.get();
-      ret.add(PokemonDataMapper.instance.fromData(pokeData, types, abilities));
+
+      // POKEMON STATS
+      final statSelect = db.select(db.pokemonStat).join(
+          [leftOuterJoin(db.stat, db.stat.id.equalsExp(db.pokemonStat.statId))])
+        ..where(db.pokemonStat.pokemonId.equals(pokeData.id));
+      final stats = await statSelect.get();
+      final joinedStats = stats
+          .map((e) => JoinedPokemonStat(
+              e.readTable(db.pokemonStat), e.readTable(db.stat)))
+          .toList();
+
+      // POKEMON ITEMS
+      final itemSelect = db.select(db.pokemonItem).join(
+          [leftOuterJoin(db.item, db.item.id.equalsExp(db.pokemonItem.itemId))])
+        ..where(db.pokemonItem.pokemonId.equals(pokeData.id));
+      final items = await itemSelect.get();
+      final itemsData = items.map((e) => e.readTable(db.item)).toList();
+
+      ret.add(PokemonDataMapper.instance
+          .fromData(pokeData, types, abilities, joinedStats, itemsData));
     }
     return Right(ret);
   }

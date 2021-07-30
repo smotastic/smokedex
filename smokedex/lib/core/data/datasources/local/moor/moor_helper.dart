@@ -37,8 +37,50 @@ class PokemonAbility extends Table {
       integer().customConstraint('NOT NULL REFERENCES pokemon (id)')();
 }
 
+class Stat extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text()();
+}
+
+class PokemonStat extends Table {
+  IntColumn get baseStat => integer()();
+  IntColumn get effort => integer()();
+
+  IntColumn get pokemonId =>
+      integer().customConstraint('NOT NULL REFERENCES pokemon (id)')();
+  IntColumn get statId =>
+      integer().customConstraint('NOT NULL REFERENCES stat (id)')();
+}
+
+class JoinedPokemonStat {
+  final PokemonStatData pokemonStat;
+  final StatData stat;
+
+  JoinedPokemonStat(this.pokemonStat, this.stat);
+}
+
+class Item extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text()();
+}
+
+class PokemonItem extends Table {
+  IntColumn get pokemonId =>
+      integer().customConstraint('NOT NULL REFERENCES pokemon (id)')();
+  IntColumn get itemId =>
+      integer().customConstraint('NOT NULL REFERENCES item (id)')();
+}
+
 @UseMoor(
-  tables: [Pokemon, PokemonType, PokemonAbility],
+  tables: [
+    Pokemon,
+    PokemonType,
+    PokemonAbility,
+    PokemonStat,
+    PokemonItem,
+    Stat,
+    Item
+  ],
 )
 class Database extends _$Database {
   Database(QueryExecutor e) : super(e);

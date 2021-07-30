@@ -766,14 +766,790 @@ class $PokemonAbilityTable extends PokemonAbility
   }
 }
 
+class PokemonStatData extends DataClass implements Insertable<PokemonStatData> {
+  final int baseStat;
+  final int effort;
+  final int pokemonId;
+  final int statId;
+  PokemonStatData(
+      {required this.baseStat,
+      required this.effort,
+      required this.pokemonId,
+      required this.statId});
+  factory PokemonStatData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String? prefix}) {
+    final effectivePrefix = prefix ?? '';
+    return PokemonStatData(
+      baseStat: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}base_stat'])!,
+      effort: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}effort'])!,
+      pokemonId: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}pokemon_id'])!,
+      statId: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}stat_id'])!,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['base_stat'] = Variable<int>(baseStat);
+    map['effort'] = Variable<int>(effort);
+    map['pokemon_id'] = Variable<int>(pokemonId);
+    map['stat_id'] = Variable<int>(statId);
+    return map;
+  }
+
+  PokemonStatCompanion toCompanion(bool nullToAbsent) {
+    return PokemonStatCompanion(
+      baseStat: Value(baseStat),
+      effort: Value(effort),
+      pokemonId: Value(pokemonId),
+      statId: Value(statId),
+    );
+  }
+
+  factory PokemonStatData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return PokemonStatData(
+      baseStat: serializer.fromJson<int>(json['baseStat']),
+      effort: serializer.fromJson<int>(json['effort']),
+      pokemonId: serializer.fromJson<int>(json['pokemonId']),
+      statId: serializer.fromJson<int>(json['statId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'baseStat': serializer.toJson<int>(baseStat),
+      'effort': serializer.toJson<int>(effort),
+      'pokemonId': serializer.toJson<int>(pokemonId),
+      'statId': serializer.toJson<int>(statId),
+    };
+  }
+
+  PokemonStatData copyWith(
+          {int? baseStat, int? effort, int? pokemonId, int? statId}) =>
+      PokemonStatData(
+        baseStat: baseStat ?? this.baseStat,
+        effort: effort ?? this.effort,
+        pokemonId: pokemonId ?? this.pokemonId,
+        statId: statId ?? this.statId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('PokemonStatData(')
+          ..write('baseStat: $baseStat, ')
+          ..write('effort: $effort, ')
+          ..write('pokemonId: $pokemonId, ')
+          ..write('statId: $statId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(baseStat.hashCode,
+      $mrjc(effort.hashCode, $mrjc(pokemonId.hashCode, statId.hashCode))));
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PokemonStatData &&
+          other.baseStat == this.baseStat &&
+          other.effort == this.effort &&
+          other.pokemonId == this.pokemonId &&
+          other.statId == this.statId);
+}
+
+class PokemonStatCompanion extends UpdateCompanion<PokemonStatData> {
+  final Value<int> baseStat;
+  final Value<int> effort;
+  final Value<int> pokemonId;
+  final Value<int> statId;
+  const PokemonStatCompanion({
+    this.baseStat = const Value.absent(),
+    this.effort = const Value.absent(),
+    this.pokemonId = const Value.absent(),
+    this.statId = const Value.absent(),
+  });
+  PokemonStatCompanion.insert({
+    required int baseStat,
+    required int effort,
+    required int pokemonId,
+    required int statId,
+  })  : baseStat = Value(baseStat),
+        effort = Value(effort),
+        pokemonId = Value(pokemonId),
+        statId = Value(statId);
+  static Insertable<PokemonStatData> custom({
+    Expression<int>? baseStat,
+    Expression<int>? effort,
+    Expression<int>? pokemonId,
+    Expression<int>? statId,
+  }) {
+    return RawValuesInsertable({
+      if (baseStat != null) 'base_stat': baseStat,
+      if (effort != null) 'effort': effort,
+      if (pokemonId != null) 'pokemon_id': pokemonId,
+      if (statId != null) 'stat_id': statId,
+    });
+  }
+
+  PokemonStatCompanion copyWith(
+      {Value<int>? baseStat,
+      Value<int>? effort,
+      Value<int>? pokemonId,
+      Value<int>? statId}) {
+    return PokemonStatCompanion(
+      baseStat: baseStat ?? this.baseStat,
+      effort: effort ?? this.effort,
+      pokemonId: pokemonId ?? this.pokemonId,
+      statId: statId ?? this.statId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (baseStat.present) {
+      map['base_stat'] = Variable<int>(baseStat.value);
+    }
+    if (effort.present) {
+      map['effort'] = Variable<int>(effort.value);
+    }
+    if (pokemonId.present) {
+      map['pokemon_id'] = Variable<int>(pokemonId.value);
+    }
+    if (statId.present) {
+      map['stat_id'] = Variable<int>(statId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PokemonStatCompanion(')
+          ..write('baseStat: $baseStat, ')
+          ..write('effort: $effort, ')
+          ..write('pokemonId: $pokemonId, ')
+          ..write('statId: $statId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PokemonStatTable extends PokemonStat
+    with TableInfo<$PokemonStatTable, PokemonStatData> {
+  final GeneratedDatabase _db;
+  final String? _alias;
+  $PokemonStatTable(this._db, [this._alias]);
+  final VerificationMeta _baseStatMeta = const VerificationMeta('baseStat');
+  late final GeneratedColumn<int?> baseStat = GeneratedColumn<int?>(
+      'base_stat', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
+  final VerificationMeta _effortMeta = const VerificationMeta('effort');
+  late final GeneratedColumn<int?> effort = GeneratedColumn<int?>(
+      'effort', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
+  final VerificationMeta _pokemonIdMeta = const VerificationMeta('pokemonId');
+  late final GeneratedColumn<int?> pokemonId = GeneratedColumn<int?>(
+      'pokemon_id', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL REFERENCES pokemon (id)');
+  final VerificationMeta _statIdMeta = const VerificationMeta('statId');
+  late final GeneratedColumn<int?> statId = GeneratedColumn<int?>(
+      'stat_id', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL REFERENCES stat (id)');
+  @override
+  List<GeneratedColumn> get $columns => [baseStat, effort, pokemonId, statId];
+  @override
+  String get aliasedName => _alias ?? 'pokemon_stat';
+  @override
+  String get actualTableName => 'pokemon_stat';
+  @override
+  VerificationContext validateIntegrity(Insertable<PokemonStatData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('base_stat')) {
+      context.handle(_baseStatMeta,
+          baseStat.isAcceptableOrUnknown(data['base_stat']!, _baseStatMeta));
+    } else if (isInserting) {
+      context.missing(_baseStatMeta);
+    }
+    if (data.containsKey('effort')) {
+      context.handle(_effortMeta,
+          effort.isAcceptableOrUnknown(data['effort']!, _effortMeta));
+    } else if (isInserting) {
+      context.missing(_effortMeta);
+    }
+    if (data.containsKey('pokemon_id')) {
+      context.handle(_pokemonIdMeta,
+          pokemonId.isAcceptableOrUnknown(data['pokemon_id']!, _pokemonIdMeta));
+    } else if (isInserting) {
+      context.missing(_pokemonIdMeta);
+    }
+    if (data.containsKey('stat_id')) {
+      context.handle(_statIdMeta,
+          statId.isAcceptableOrUnknown(data['stat_id']!, _statIdMeta));
+    } else if (isInserting) {
+      context.missing(_statIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  @override
+  PokemonStatData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return PokemonStatData.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  }
+
+  @override
+  $PokemonStatTable createAlias(String alias) {
+    return $PokemonStatTable(_db, alias);
+  }
+}
+
+class PokemonItemData extends DataClass implements Insertable<PokemonItemData> {
+  final int pokemonId;
+  final int itemId;
+  PokemonItemData({required this.pokemonId, required this.itemId});
+  factory PokemonItemData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String? prefix}) {
+    final effectivePrefix = prefix ?? '';
+    return PokemonItemData(
+      pokemonId: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}pokemon_id'])!,
+      itemId: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}item_id'])!,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['pokemon_id'] = Variable<int>(pokemonId);
+    map['item_id'] = Variable<int>(itemId);
+    return map;
+  }
+
+  PokemonItemCompanion toCompanion(bool nullToAbsent) {
+    return PokemonItemCompanion(
+      pokemonId: Value(pokemonId),
+      itemId: Value(itemId),
+    );
+  }
+
+  factory PokemonItemData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return PokemonItemData(
+      pokemonId: serializer.fromJson<int>(json['pokemonId']),
+      itemId: serializer.fromJson<int>(json['itemId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'pokemonId': serializer.toJson<int>(pokemonId),
+      'itemId': serializer.toJson<int>(itemId),
+    };
+  }
+
+  PokemonItemData copyWith({int? pokemonId, int? itemId}) => PokemonItemData(
+        pokemonId: pokemonId ?? this.pokemonId,
+        itemId: itemId ?? this.itemId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('PokemonItemData(')
+          ..write('pokemonId: $pokemonId, ')
+          ..write('itemId: $itemId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(pokemonId.hashCode, itemId.hashCode));
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PokemonItemData &&
+          other.pokemonId == this.pokemonId &&
+          other.itemId == this.itemId);
+}
+
+class PokemonItemCompanion extends UpdateCompanion<PokemonItemData> {
+  final Value<int> pokemonId;
+  final Value<int> itemId;
+  const PokemonItemCompanion({
+    this.pokemonId = const Value.absent(),
+    this.itemId = const Value.absent(),
+  });
+  PokemonItemCompanion.insert({
+    required int pokemonId,
+    required int itemId,
+  })  : pokemonId = Value(pokemonId),
+        itemId = Value(itemId);
+  static Insertable<PokemonItemData> custom({
+    Expression<int>? pokemonId,
+    Expression<int>? itemId,
+  }) {
+    return RawValuesInsertable({
+      if (pokemonId != null) 'pokemon_id': pokemonId,
+      if (itemId != null) 'item_id': itemId,
+    });
+  }
+
+  PokemonItemCompanion copyWith({Value<int>? pokemonId, Value<int>? itemId}) {
+    return PokemonItemCompanion(
+      pokemonId: pokemonId ?? this.pokemonId,
+      itemId: itemId ?? this.itemId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (pokemonId.present) {
+      map['pokemon_id'] = Variable<int>(pokemonId.value);
+    }
+    if (itemId.present) {
+      map['item_id'] = Variable<int>(itemId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PokemonItemCompanion(')
+          ..write('pokemonId: $pokemonId, ')
+          ..write('itemId: $itemId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PokemonItemTable extends PokemonItem
+    with TableInfo<$PokemonItemTable, PokemonItemData> {
+  final GeneratedDatabase _db;
+  final String? _alias;
+  $PokemonItemTable(this._db, [this._alias]);
+  final VerificationMeta _pokemonIdMeta = const VerificationMeta('pokemonId');
+  late final GeneratedColumn<int?> pokemonId = GeneratedColumn<int?>(
+      'pokemon_id', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL REFERENCES pokemon (id)');
+  final VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
+  late final GeneratedColumn<int?> itemId = GeneratedColumn<int?>(
+      'item_id', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL REFERENCES item (id)');
+  @override
+  List<GeneratedColumn> get $columns => [pokemonId, itemId];
+  @override
+  String get aliasedName => _alias ?? 'pokemon_item';
+  @override
+  String get actualTableName => 'pokemon_item';
+  @override
+  VerificationContext validateIntegrity(Insertable<PokemonItemData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('pokemon_id')) {
+      context.handle(_pokemonIdMeta,
+          pokemonId.isAcceptableOrUnknown(data['pokemon_id']!, _pokemonIdMeta));
+    } else if (isInserting) {
+      context.missing(_pokemonIdMeta);
+    }
+    if (data.containsKey('item_id')) {
+      context.handle(_itemIdMeta,
+          itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  @override
+  PokemonItemData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return PokemonItemData.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  }
+
+  @override
+  $PokemonItemTable createAlias(String alias) {
+    return $PokemonItemTable(_db, alias);
+  }
+}
+
+class StatData extends DataClass implements Insertable<StatData> {
+  final int id;
+  final String name;
+  StatData({required this.id, required this.name});
+  factory StatData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String? prefix}) {
+    final effectivePrefix = prefix ?? '';
+    return StatData(
+      id: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      name: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    return map;
+  }
+
+  StatCompanion toCompanion(bool nullToAbsent) {
+    return StatCompanion(
+      id: Value(id),
+      name: Value(name),
+    );
+  }
+
+  factory StatData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return StatData(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  StatData copyWith({int? id, String? name}) => StatData(
+        id: id ?? this.id,
+        name: name ?? this.name,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('StatData(')
+          ..write('id: $id, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(id.hashCode, name.hashCode));
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is StatData && other.id == this.id && other.name == this.name);
+}
+
+class StatCompanion extends UpdateCompanion<StatData> {
+  final Value<int> id;
+  final Value<String> name;
+  const StatCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+  });
+  StatCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+  }) : name = Value(name);
+  static Insertable<StatData> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+    });
+  }
+
+  StatCompanion copyWith({Value<int>? id, Value<String>? name}) {
+    return StatCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StatCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $StatTable extends Stat with TableInfo<$StatTable, StatData> {
+  final GeneratedDatabase _db;
+  final String? _alias;
+  $StatTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _nameMeta = const VerificationMeta('name');
+  late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
+      'name', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, name];
+  @override
+  String get aliasedName => _alias ?? 'stat';
+  @override
+  String get actualTableName => 'stat';
+  @override
+  VerificationContext validateIntegrity(Insertable<StatData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  StatData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return StatData.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  }
+
+  @override
+  $StatTable createAlias(String alias) {
+    return $StatTable(_db, alias);
+  }
+}
+
+class ItemData extends DataClass implements Insertable<ItemData> {
+  final int id;
+  final String name;
+  ItemData({required this.id, required this.name});
+  factory ItemData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String? prefix}) {
+    final effectivePrefix = prefix ?? '';
+    return ItemData(
+      id: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      name: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    return map;
+  }
+
+  ItemCompanion toCompanion(bool nullToAbsent) {
+    return ItemCompanion(
+      id: Value(id),
+      name: Value(name),
+    );
+  }
+
+  factory ItemData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return ItemData(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  ItemData copyWith({int? id, String? name}) => ItemData(
+        id: id ?? this.id,
+        name: name ?? this.name,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('ItemData(')
+          ..write('id: $id, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(id.hashCode, name.hashCode));
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ItemData && other.id == this.id && other.name == this.name);
+}
+
+class ItemCompanion extends UpdateCompanion<ItemData> {
+  final Value<int> id;
+  final Value<String> name;
+  const ItemCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+  });
+  ItemCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+  }) : name = Value(name);
+  static Insertable<ItemData> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+    });
+  }
+
+  ItemCompanion copyWith({Value<int>? id, Value<String>? name}) {
+    return ItemCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ItemCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ItemTable extends Item with TableInfo<$ItemTable, ItemData> {
+  final GeneratedDatabase _db;
+  final String? _alias;
+  $ItemTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _nameMeta = const VerificationMeta('name');
+  late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
+      'name', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, name];
+  @override
+  String get aliasedName => _alias ?? 'item';
+  @override
+  String get actualTableName => 'item';
+  @override
+  VerificationContext validateIntegrity(Insertable<ItemData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ItemData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return ItemData.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  }
+
+  @override
+  $ItemTable createAlias(String alias) {
+    return $ItemTable(_db, alias);
+  }
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   late final $PokemonTable pokemon = $PokemonTable(this);
   late final $PokemonTypeTable pokemonType = $PokemonTypeTable(this);
   late final $PokemonAbilityTable pokemonAbility = $PokemonAbilityTable(this);
+  late final $PokemonStatTable pokemonStat = $PokemonStatTable(this);
+  late final $PokemonItemTable pokemonItem = $PokemonItemTable(this);
+  late final $StatTable stat = $StatTable(this);
+  late final $ItemTable item = $ItemTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [pokemon, pokemonType, pokemonAbility];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+        pokemon,
+        pokemonType,
+        pokemonAbility,
+        pokemonStat,
+        pokemonItem,
+        stat,
+        item
+      ];
 }

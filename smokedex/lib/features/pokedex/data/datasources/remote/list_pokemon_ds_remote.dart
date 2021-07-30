@@ -38,6 +38,19 @@ class ListPokemonDataSourceRemoteImpl extends ListPokemonDataSourceRemote {
       types.add(type.getOrElse(() => throw UnknownFailure()));
     }
 
-    return PokemonMapper.instance.fromResource(pokemon, types, abilities);
+    var items = <ItemResource>[];
+    for (var heldItem in pokemon.heldItems) {
+      // if i need more, i can use the stat endpoint
+      final item = ItemResource(heldItem.item.id, heldItem.item.name);
+      items.add(item);
+    }
+
+    return PokemonMapper.instance.fromResource(
+      pokemon,
+      types,
+      abilities,
+      pokemon.stats,
+      items,
+    );
   }
 }

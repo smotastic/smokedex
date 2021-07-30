@@ -14,7 +14,7 @@ class ListPokemonCubit extends Cubit<ListPokemonState> {
   ListPokemonCubit(this.listPokemonUseCase) : super(ListPokemonLoadingState());
 
   void initialLoad() async {
-    final result = await listPokemonUseCase(ListPokemonParams(25, 0));
+    final result = await listPokemonUseCase(ListPokemonParams(20, 0));
 
     result.fold((l) => emit(ListPokemonLoadErrorState(l)),
         (r) => emit(ListPokemonLoadedState(r)));
