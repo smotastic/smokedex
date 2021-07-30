@@ -11,6 +11,7 @@ PokemonResource _$PokemonResourceFromJson(Map<String, dynamic> json) {
     json['id'] as int,
     json['name'] as String,
     json['weight'] as int,
+    json['height'] as int,
     json['base_experience'] as int,
     (json['types'] as List<dynamic>)
         .map(
@@ -21,6 +22,14 @@ PokemonResource _$PokemonResourceFromJson(Map<String, dynamic> json) {
         .map((e) =>
             PokemonAbilityNamedResource.fromJson(e as Map<String, dynamic>))
         .toList(),
+    (json['stats'] as List<dynamic>)
+        .map(
+            (e) => PokemonStatNamedResource.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    (json['held_items'] as List<dynamic>)
+        .map((e) =>
+            PokemonHeldItemNamedResource.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
@@ -29,10 +38,13 @@ Map<String, dynamic> _$PokemonResourceToJson(PokemonResource instance) =>
       'id': instance.id,
       'name': instance.name,
       'weight': instance.weight,
+      'height': instance.height,
       'base_experience': instance.baseExperience,
       'types': instance.types,
       'sprites': instance.sprites,
       'abilities': instance.abilities,
+      'stats': instance.stats,
+      'held_items': instance.heldItems,
     };
 
 PokemonAbilityNamedResource _$PokemonAbilityNamedResourceFromJson(
@@ -65,6 +77,36 @@ Map<String, dynamic> _$PokemonTypeNamedResourceToJson(
     <String, dynamic>{
       'slot': instance.slot,
       'type': instance.type,
+    };
+
+PokemonStatNamedResource _$PokemonStatNamedResourceFromJson(
+    Map<String, dynamic> json) {
+  return PokemonStatNamedResource(
+    json['base_stat'] as int,
+    json['effort'] as int,
+    NamedResourceModel.fromJson(json['stat'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$PokemonStatNamedResourceToJson(
+        PokemonStatNamedResource instance) =>
+    <String, dynamic>{
+      'base_stat': instance.baseStat,
+      'effort': instance.effort,
+      'stat': instance.stat,
+    };
+
+PokemonHeldItemNamedResource _$PokemonHeldItemNamedResourceFromJson(
+    Map<String, dynamic> json) {
+  return PokemonHeldItemNamedResource(
+    NamedResourceModel.fromJson(json['item'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$PokemonHeldItemNamedResourceToJson(
+        PokemonHeldItemNamedResource instance) =>
+    <String, dynamic>{
+      'item': instance.item,
     };
 
 PokemonSpriteResource _$PokemonSpriteResourceFromJson(

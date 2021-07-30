@@ -8,14 +8,27 @@ class PokemonResource extends BaseResource {
   final int id;
   final String name;
   final int weight;
+  final int height;
   @JsonKey(name: 'base_experience')
   final int baseExperience;
   final List<PokemonTypeNamedResource> types;
   final PokemonSpriteResource sprites;
   final List<PokemonAbilityNamedResource> abilities;
+  final List<PokemonStatNamedResource> stats;
+  @JsonKey(name: 'held_items')
+  final List<PokemonHeldItemNamedResource> heldItems;
 
-  PokemonResource(this.id, this.name, this.weight, this.baseExperience,
-      this.types, this.sprites, this.abilities);
+  PokemonResource(
+      this.id,
+      this.name,
+      this.weight,
+      this.height,
+      this.baseExperience,
+      this.types,
+      this.sprites,
+      this.abilities,
+      this.stats,
+      this.heldItems);
 
   factory PokemonResource.fromJson(Map<String, dynamic> json) {
     return _$PokemonResourceFromJson(json);
@@ -45,6 +58,31 @@ class PokemonTypeNamedResource {
 
   factory PokemonTypeNamedResource.fromJson(Map<String, dynamic> json) {
     return _$PokemonTypeNamedResourceFromJson(json);
+  }
+}
+
+@JsonSerializable()
+class PokemonStatNamedResource {
+  @JsonKey(name: 'base_stat')
+  final int baseStat;
+  final int effort;
+  final NamedResourceModel stat;
+
+  PokemonStatNamedResource(this.baseStat, this.effort, this.stat);
+
+  factory PokemonStatNamedResource.fromJson(Map<String, dynamic> json) {
+    return _$PokemonStatNamedResourceFromJson(json);
+  }
+}
+
+@JsonSerializable()
+class PokemonHeldItemNamedResource {
+  final NamedResourceModel item;
+
+  PokemonHeldItemNamedResource(this.item);
+
+  factory PokemonHeldItemNamedResource.fromJson(Map<String, dynamic> json) {
+    return _$PokemonHeldItemNamedResourceFromJson(json);
   }
 }
 
