@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:smokedex/features/pokedex/data/datasources/remote/cache_pokemon_ds_remote.dart';
 import 'package:smokedex/features/pokedex/data/models/pokemon_model.dart';
 import 'package:smokedex/features/pokedex/domain/failures/cache_pokemon_failure.dart';
+import 'package:supabase/supabase.dart';
 
 @LazySingleton(as: CachePokemonDataSourceRemote)
 class CachePokemonDataSourceRemoteSupabase
@@ -27,6 +28,7 @@ class CachePokemonDataSourceRemoteSupabase
       return Left(CachePokemonFailure());
     }
     final id = result[0]['id']!;
+
     // ABILITY
     final abilityUpserts = model.abilities.map(
       (ability) => db.from('pokemon_ability').upsert({
@@ -48,20 +50,8 @@ class CachePokemonDataSourceRemoteSupabase
 
     // STATS
     for (var stat in model.stats) {
-      final existingStatResp = await db
-          .from('stat')
-          .select('id')
-          .filter('name', 'eq', stat.name)
-          .execute();
+      int? statId = await _findExistingIdForName(db, 'stat', stat.name);
 
-      int? statId;
-      // first check for existing stat
-      if (existingStatResp.error == null) {
-        final existingStat = existingStatResp.data as List<dynamic>;
-        if (existingStat.isNotEmpty) {
-          statId = existingStat[0]['id'];
-        }
-      }
       // if not there, create it
       if (statId == null) {
         final statResp = await db.from('stat').upsert({'name': stat.name},
@@ -80,20 +70,42 @@ class CachePokemonDataSourceRemoteSupabase
       }).execute();
     }
 
-    // // ITEMS
-    // for (var item in model.heldItems) {
-    //   final itemResp = await db
-    //       .from('item')
-    //       .upsert({'name': item.name}, ignoreDuplicates: true).execute();
-    //   final itemResult = itemResp.data as List<dynamic>;
-    //   if (itemResult.isNotEmpty) {
-    //     final itemId = itemResult[0]['id']!;
-    //     await db
-    //         .from('pokemon_item')
-    //         .upsert({'pokemon_id': id, 'item_id': itemId}).execute();
-    //   }
-    // }
+    // ITEMS
+    for (var item in model.heldItems) {
+      print(item);
+      int? itemId = await _findExistingIdForName(db, 'item', item.name);
+      print('found itemId $itemId');
+      // if not there, create it
+      if (itemId == null) {
+        final itemResp = await db.from('item').upsert({'name': item.name},
+            ignoreDuplicates: true, onConflict: 'name').execute();
+        final itemResult = itemResp.data as List<dynamic>;
+        if (itemResult.isNotEmpty) {
+          itemId = itemResult[0]['id']!;
+        }
+      }
+
+      await db
+          .from('pokemon_item')
+          .upsert({'pokemon_id': id, 'item_id': itemId}).execute();
+    }
 
     return Right(true);
+  }
+
+  Future<int?> _findExistingIdForName(
+      SupabaseClient db, String table, String name) async {
+    final existingItemResp =
+        await db.from(table).select('id').filter('name', 'eq', name).execute();
+
+    int? id;
+    // first check for existing stat
+    if (existingItemResp.error == null) {
+      final existingStat = existingItemResp.data as List<dynamic>;
+      if (existingStat.isNotEmpty) {
+        id = existingStat[0]['id'];
+      }
+    }
+    return id;
   }
 }
