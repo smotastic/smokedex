@@ -37,14 +37,14 @@ class CachePokemonDataSourceRemoteSupabase
         'shorteffect': ability.shortEffect,
         'language': ability.language,
         'pokemon_id': id
-      }, ignoreDuplicates: true).execute(),
+      }, ignoreDuplicates: true, onConflict: 'name,pokemon_id').execute(),
     );
     await Future.wait(abilityUpserts);
 
     // TYPES
     final typeUpserts = model.types.map(
       (type) => db.from('pokemon_type').upsert({'type': type, 'pokemon_id': id},
-          ignoreDuplicates: true).execute(),
+          ignoreDuplicates: true, onConflict: 'type,pokemon_id').execute(),
     );
     await Future.wait(typeUpserts);
 
@@ -67,14 +67,12 @@ class CachePokemonDataSourceRemoteSupabase
         'effort': stat.effort,
         'pokemon_id': id,
         'stat_id': statId
-      }).execute();
+      }, onConflict: 'pokemon_id,stat_id').execute();
     }
 
     // ITEMS
     for (var item in model.heldItems) {
-      print(item);
       int? itemId = await _findExistingIdForName(db, 'item', item.name);
-      print('found itemId $itemId');
       // if not there, create it
       if (itemId == null) {
         final itemResp = await db.from('item').upsert({'name': item.name},
@@ -85,9 +83,9 @@ class CachePokemonDataSourceRemoteSupabase
         }
       }
 
-      await db
-          .from('pokemon_item')
-          .upsert({'pokemon_id': id, 'item_id': itemId}).execute();
+      await db.from('pokemon_item').upsert(
+          {'pokemon_id': id, 'item_id': itemId},
+          onConflict: 'pokemon_id,item_id').execute();
     }
 
     return Right(true);
