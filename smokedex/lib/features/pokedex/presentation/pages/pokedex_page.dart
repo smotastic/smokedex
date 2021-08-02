@@ -42,7 +42,7 @@ class PokedexView extends StatelessWidget {
             ),
             itemBuilder: (_, i) {
               if (i >= state.pokemons.length) {
-                // BlocProvider.of<ListPokemonCubit>(context).requestNextPage();
+                BlocProvider.of<ListPokemonCubit>(context).requestNextPage();
                 return Center(child: CircularProgressIndicator());
               }
               PokemonEntry entry = state.pokemons[i];

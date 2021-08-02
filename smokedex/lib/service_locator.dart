@@ -16,6 +16,7 @@ const web = const Environment(DeviceSegment.web);
 const moor = const Environment('moor');
 const sqlite = const Environment('sqlite');
 const memory = const Environment('memory');
+const hive = const Environment('hive');
 
 Future<void> configureDependencies(Set<String> environments) async {
   print(environments);

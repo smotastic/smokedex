@@ -19,7 +19,8 @@ class SqfliteHelper {
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, 'pokemon');
-    return await openDatabase(path, version: 2, onCreate: _onCreate);
+    _database = await openDatabase(path, version: 2, onCreate: _onCreate);
+    return _database;
   }
 
   Future _onCreate(Database db, int version) async {
