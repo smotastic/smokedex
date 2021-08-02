@@ -30,25 +30,32 @@ class CachePokemonDataSourceRemoteSupabase
     final id = result[0]['id']!;
 
     // ABILITY
-    final abilityUpserts = model.abilities.map(
-      (ability) => db.from('pokemon_ability').upsert({
-        'name': ability.name,
-        'effect': ability.effect,
-        'shorteffect': ability.shortEffect,
-        'language': ability.language,
-        'pokemon_id': id
-      }, ignoreDuplicates: true, onConflict: 'name,pokemon_id').execute(),
-    );
-    await Future.wait(abilityUpserts);
+    final abilityUpserts = model.abilities
+        .map((ability) => {
+              'name': ability.name,
+              'effect': ability.effect,
+              'shorteffect': ability.shortEffect,
+              'language': ability.language,
+              'pokemon_id': id
+            })
+        .toList();
+    await db
+        .from('pokemon_ability')
+        .upsert(abilityUpserts,
+            ignoreDuplicates: true, onConflict: 'name,pokemon_id')
+        .execute();
 
     // TYPES
-    final typeUpserts = model.types.map(
-      (type) => db.from('pokemon_type').upsert({'type': type, 'pokemon_id': id},
-          ignoreDuplicates: true, onConflict: 'type,pokemon_id').execute(),
-    );
-    await Future.wait(typeUpserts);
+    final typeUpserts =
+        model.types.map((type) => {'type': type, 'pokemon_id': id}).toList();
+    await db
+        .from('pokemon_type')
+        .upsert(typeUpserts,
+            ignoreDuplicates: true, onConflict: 'type,pokemon_id')
+        .execute();
 
     // STATS
+    final statUpserts = [];
     for (var stat in model.stats) {
       int? statId = await _findExistingIdForName(db, 'stat', stat.name);
 
@@ -61,16 +68,20 @@ class CachePokemonDataSourceRemoteSupabase
           statId = statResult[0]['id']!;
         }
       }
-
-      await db.from('pokemon_stat').upsert({
+      statUpserts.add({
         'basestat': stat.baseStat,
         'effort': stat.effort,
         'pokemon_id': id,
         'stat_id': statId
-      }, onConflict: 'pokemon_id,stat_id').execute();
+      });
     }
+    await db
+        .from('pokemon_stat')
+        .upsert(statUpserts, onConflict: 'pokemon_id,stat_id')
+        .execute();
 
     // ITEMS
+    final itemUpserts = [];
     for (var item in model.heldItems) {
       int? itemId = await _findExistingIdForName(db, 'item', item.name);
       // if not there, create it
@@ -82,12 +93,12 @@ class CachePokemonDataSourceRemoteSupabase
           itemId = itemResult[0]['id']!;
         }
       }
-
-      await db.from('pokemon_item').upsert(
-          {'pokemon_id': id, 'item_id': itemId},
-          onConflict: 'pokemon_id,item_id').execute();
+      itemUpserts.add({'pokemon_id': id, 'item_id': itemId});
     }
-
+    await db
+        .from('pokemon_item')
+        .upsert(itemUpserts, onConflict: 'pokemon_id,item_id')
+        .execute();
     return Right(true);
   }
 
