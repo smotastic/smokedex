@@ -1,13 +1,16 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:injectable/injectable.dart';
+import 'package:smokedex/core/data/datasources/local/db_helper.dart';
+import 'package:smokedex/service_locator.dart';
 
 part 'hive_helper.g.dart';
 
-class HiveHelper {
-  HiveHelper._();
-  static final I = HiveHelper._();
-
+@LazySingleton()
+@hive
+class HiveHelper extends DbHelper<HiveInterface> {
   HiveInterface? _db;
 
+  @override
   Future<HiveInterface> get database async {
     return _db ?? await constructDb();
   }

@@ -14,10 +14,11 @@ import 'list_pokemon_ds_local.dart';
 @sqlite
 @LazySingleton(as: ListPokemonDataSourceLocal)
 class ListPokemonDataSourceLocalSqlite extends ListPokemonDataSourceLocal {
+  final SqfliteHelper helper;
   late final Future<Database> _database;
 
-  ListPokemonDataSourceLocalSqlite() {
-    _database = SqfliteHelper.I.database;
+  ListPokemonDataSourceLocalSqlite(this.helper) {
+    _database = helper.database;
   }
 
   @override

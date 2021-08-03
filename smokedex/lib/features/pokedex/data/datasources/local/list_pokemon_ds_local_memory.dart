@@ -9,10 +9,17 @@ import 'package:smokedex/service_locator.dart';
 @memory
 @LazySingleton(as: ListPokemonDataSourceLocal)
 class ListPokemonDataSourceLocalMemory extends ListPokemonDataSourceLocal {
+  final MemoryHelper helper;
+  late final Future<Map<num, Map<String, dynamic>>> _db;
+
+  ListPokemonDataSourceLocalMemory(this.helper) {
+    this._db = helper.database;
+  }
+
   @override
   Future<Either<Failure, List<PokemonModel>>> list(
       num pageSize, num offset) async {
-    final db = await MemoryHelper.I.database;
+    final db = await _db;
     var result = <PokemonModel>[];
     numberGenerator
         .skip(offset.toInt())
@@ -46,7 +53,7 @@ class ListPokemonDataSourceLocalMemory extends ListPokemonDataSourceLocal {
   @override
   Future<Either<Failure, Map<num, PokemonModel>>> cache(
       num index, PokemonModel pokemon) async {
-    final db = await MemoryHelper.I.database;
+    final db = await _db;
     db.putIfAbsent(
         index,
         () => {

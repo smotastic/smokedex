@@ -1,17 +1,18 @@
+import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:smokedex/core/data/datasources/local/db_helper.dart';
 import 'package:smokedex/core/data/meta/pokemon_meta.dart';
+import 'package:smokedex/service_locator.dart';
 import 'package:sqflite/sqflite.dart';
-import 'dart:convert';
 import 'dart:io';
 import 'package:path/path.dart';
 
-class SqfliteHelper {
-  SqfliteHelper._();
-
-  static final I = SqfliteHelper._();
-
+@LazySingleton()
+@sqlite
+class SqfliteHelper extends DbHelper<Database> {
   Database? _database;
 
+  @override
   Future<Database> get database async {
     return _database ?? await initDB();
   }

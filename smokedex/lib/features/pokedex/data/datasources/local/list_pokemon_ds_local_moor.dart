@@ -14,10 +14,11 @@ import 'list_pokemon_ds_local.dart';
 @moor
 @LazySingleton(as: ListPokemonDataSourceLocal)
 class ListPokemonDataSourceLocalMoor extends ListPokemonDataSourceLocal {
+  final MoorHelper helper;
   late final Future<Database> _database;
 
-  ListPokemonDataSourceLocalMoor() {
-    _database = MoorHelper.I.database;
+  ListPokemonDataSourceLocalMoor(this.helper) {
+    _database = helper.database;
   }
   @override
   Future<Either<Failure, Map<num, PokemonModel>>> cache(

@@ -1,14 +1,16 @@
+import 'package:injectable/injectable.dart';
 import 'package:moor/moor.dart';
+import 'package:smokedex/core/data/datasources/local/db_helper.dart';
+import 'package:smokedex/service_locator.dart';
 import 'database/moor_database.dart';
 part 'moor_helper.g.dart';
 
-class MoorHelper {
-  MoorHelper._();
-
-  static final I = MoorHelper._();
-
+@LazySingleton()
+@moor
+class MoorHelper extends DbHelper<Database> {
   Database? _database;
 
+  @override
   Future<Database> get database async {
     return _database ?? await constructDb(logStatements: false);
   }

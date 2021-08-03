@@ -1,4 +1,6 @@
+import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
+import 'package:smokedex/core/data/datasources/local/db_helper.dart';
 import 'package:smokedex/core/data/datasources/local/hive/hive_helper.dart';
 import 'package:smokedex/core/domain/failure.dart';
 import 'package:dartz/dartz.dart';
@@ -10,10 +12,17 @@ import 'package:smokedex/service_locator.dart';
 @hive
 @LazySingleton(as: ListPokemonDataSourceLocal)
 class ListPokemonDataSourceLocalHive extends ListPokemonDataSourceLocal {
+  final HiveHelper helper;
+  late final Future<HiveInterface> _db;
+
+  ListPokemonDataSourceLocalHive(this.helper) {
+    _db = helper.database;
+  }
+
   @override
   Future<Either<Failure, Map<num, PokemonModel>>> cache(
       num index, PokemonModel pokemon) async {
-    final db = await HiveHelper.I.database;
+    final db = await _db;
     final pokemonBox = await db.openBox('pokemon');
     final hivePoke = PokemonHiveMapper.instance.fromModel(pokemon);
     pokemonBox.put(index, hivePoke);
@@ -28,7 +37,7 @@ class ListPokemonDataSourceLocalHive extends ListPokemonDataSourceLocal {
   @override
   Future<Either<Failure, List<PokemonModel>>> list(
       num pageSize, num offset) async {
-    final db = await HiveHelper.I.database;
+    final db = await _db;
     final pokemonBox = await db.openBox('pokemon');
     final result = <PokemonModel>[];
     numberGenerator
