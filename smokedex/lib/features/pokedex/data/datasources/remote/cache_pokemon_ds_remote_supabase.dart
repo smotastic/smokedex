@@ -6,13 +6,24 @@ import 'package:smokedex/features/pokedex/data/datasources/remote/cache_pokemon_
 import 'package:smokedex/features/pokedex/data/models/pokemon_model.dart';
 import 'package:smokedex/features/pokedex/domain/failures/cache_pokemon_failure.dart';
 import 'package:supabase/supabase.dart';
+import 'package:http/http.dart' as http;
 
 @LazySingleton(as: CachePokemonDataSourceRemote)
 class CachePokemonDataSourceRemoteSupabase
     extends CachePokemonDataSourceRemote {
+  final SupabaseHelper helper;
+  late final Future<SupabaseClient> _db;
+  late final http.Client _client;
+
+  CachePokemonDataSourceRemoteSupabase(this.helper) {
+    this._db = helper.database;
+    _client = new http.Client();
+  }
+
   @override
   Future<Either<Failure, bool>> cache(PokemonModel model) async {
-    final db = await SupabaseHelper.I.database;
+    final db = await _db;
+
     final response = await db.from('pokemon').upsert({
       'num': model.id,
       'name': model.name,
@@ -28,6 +39,8 @@ class CachePokemonDataSourceRemoteSupabase
       return Left(CachePokemonFailure());
     }
     final id = result[0]['id']!;
+
+    await _uploadUrl(model.name, model.imageUrl);
 
     // ABILITY
     final abilityUpserts = model.abilities
@@ -116,5 +129,17 @@ class CachePokemonDataSourceRemoteSupabase
       }
     }
     return id;
+  }
+
+  Future<void> _uploadUrl(String name, String url) async {
+    final db = await _db;
+    var req = await _client.get(Uri.parse(url));
+    var bytes = req.bodyBytes;
+    final resp = await db.storage.from('pokemon-storage').uploadBinary(
+        'public/$name.jpg', bytes,
+        fileOptions: FileOptions(upsert: true));
+    if (resp.error != null) {
+      print(resp.error!.message);
+    }
   }
 }

@@ -23,35 +23,35 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  smokeapi:
+    path: ../smokeapi
   cupertino_icons: ^1.0.2
   dartz: ^0.10.0-nullsafety.2
   equatable: ^2.0.3
   flutter_bloc: ^7.0.1
-  get_it: ^7.1.3
-  injectable: ^1.4.1
-  smartstruct: ^1.2.2
-  smokeapi:
-    path: '../smokeapi'
-  flutter_svg: ^0.22.0
-  sqflite: ^2.0.0+3
-  path_provider: ^2.0.2
-  path: ^1.8.0
-  moor: ^4.4.1
-  sqlite3_flutter_libs: ^0.5.0
-  supabase: ^0.0.6
   flutter_dotenv: ^5.0.0
+  flutter_svg: ^0.22.0
+  get_it: ^7.1.3
   hive: ^2.0.4
   hive_flutter: ^1.1.0
-  
+  http: ^0.13.3
+  injectable: ^1.4.1
+  moor: ^4.4.1
+  path: ^1.8.0
+  path_provider: ^2.0.2
+  smartstruct: ^1.2.2
+  sqflite: ^2.0.0+3
+  sqlite3_flutter_libs: ^0.5.0
+  supabase: ^0.0.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.0.4
-  injectable_generator: ^1.4.1
-  smartstruct_generator: ^1.2.2
-  moor_generator: ^4.4.1
   hive_generator: ^1.1.0
+  injectable_generator: ^1.4.1
+  moor_generator: ^4.4.1
+  smartstruct_generator: ^1.2.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -1,10 +1,9 @@
+import 'package:injectable/injectable.dart';
 import 'package:smokedex/core/data/config.dart';
 import 'package:supabase/supabase.dart';
 
+@LazySingleton()
 class SupabaseHelper {
-  SupabaseHelper._();
-  static final I = SupabaseHelper._();
-
   SupabaseClient? db;
 
   Future<SupabaseClient> get database async {
