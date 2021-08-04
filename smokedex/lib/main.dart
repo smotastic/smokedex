@@ -12,7 +12,6 @@ import 'service_locator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
   await Config.I.init();
   final String dataSourceEnv = fetchDataSourceByDevice();
   await configureDependencies({

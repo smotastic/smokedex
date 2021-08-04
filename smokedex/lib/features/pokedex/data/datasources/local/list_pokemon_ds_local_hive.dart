@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
-import 'package:smokedex/core/data/datasources/local/db_helper.dart';
 import 'package:smokedex/core/data/datasources/local/hive/hive_helper.dart';
 import 'package:smokedex/core/domain/failure.dart';
 import 'package:dartz/dartz.dart';

@@ -8,6 +8,7 @@ abstract class Logger {
     for (var l in Level.values) l.name: l
   };
 
+  /// Sets the [Level] for this logger
   void set level(Level level);
 
   /// Log a message at level [Level.verbose].
