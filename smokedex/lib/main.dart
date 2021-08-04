@@ -4,6 +4,8 @@ import 'package:smokedex/core/data/config.dart';
 import 'package:smokedex/core/presentation/device_segment.dart';
 import 'package:smokedex/features/pokemon_detail/presentation/pages/detail_pokemon_page.dart';
 import 'package:smokedex/features/pokedex/presentation/pages/pokedex_page.dart';
+import 'package:smokedex/logger/logger.dart';
+import 'package:smokedex/logger/logger_level.dart';
 
 import 'core/presentation/themes.dart';
 import 'service_locator.dart';
@@ -17,15 +19,18 @@ void main() async {
     DeviceSegment.currentDevice.name,
     dataSourceEnv,
   });
+  Level envLevel = Logger.levelByName[Config.I.get('log.level') ?? 'debug']!;
+  Logger.I.level = envLevel;
+  Logger.I.i('Hallo Welt!');
   runApp(MyApp());
 }
 
 String fetchDataSourceByDevice() {
   String ret = memory.name; // default
   if (DeviceSegment.currentDevice.isMobile()) {
-    ret = Config.I.get('LOCAL_DATASOURCE_MOBILE') ?? moor.name;
+    ret = Config.I.get('LOCAL_DATASOURCE_MOBILE') ?? hive.name;
   } else if (DeviceSegment.currentDevice.isWeb()) {
-    ret = Config.I.get('LOCAL_DATASOURCE_WEB') ?? moor.name;
+    ret = Config.I.get('LOCAL_DATASOURCE_WEB') ?? hive.name;
   }
   return ret;
 }

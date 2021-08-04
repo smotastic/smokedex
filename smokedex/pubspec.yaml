@@ -43,6 +43,8 @@ dependencies:
   sqflite: ^2.0.0+3
   sqlite3_flutter_libs: ^0.5.0
   supabase: ^0.0.6
+  logger: ^1.0.0
+  enume: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +54,7 @@ dev_dependencies:
   injectable_generator: ^1.4.1
   moor_generator: ^4.4.1
   smartstruct_generator: ^1.2.2
+  enume_generator: ^1.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
