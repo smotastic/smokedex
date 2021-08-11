@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:smokedex/core/data/config.dart';
 import 'package:smokedex/core/presentation/device_segment.dart';
 import 'package:smokedex/features/pokemon_detail/presentation/pages/detail_pokemon_page.dart';

@@ -47,6 +47,8 @@ dependencies:
   enume: ^1.1.0
   mocktail: ^0.1.4
   smartdata: ^0.0.1
+  lumberdash: ^3.0.0
+  colorize_lumberdash: ^3.0.0
 
 dev_dependencies:
   flutter_test:

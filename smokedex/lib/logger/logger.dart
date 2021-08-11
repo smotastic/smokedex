@@ -1,9 +1,10 @@
 import 'package:smokedex/logger/simple_logger.dart';
 
 import 'logger_level.dart';
+import 'lumberdash_logger.dart';
 
 abstract class Logger {
-  static Logger get I => SimpleLogger();
+  static Logger get I => LumberdashLogger();
   static Map<String, Level> levelByName = {
     for (var l in Level.values) l.name: l
   };
