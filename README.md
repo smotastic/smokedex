@@ -7,16 +7,17 @@ This Repository contains of two projects.
 
 
 # Tech Stack
-* Flutter
-* dartz - Primarly for the Either class, to represent a unified value for each usecase
-* equatable - Easily find out if a model / entity is equal. Useful for noticing changes in the BloC state management
-* flutter_dotenv - To enable profile based environments out of a .env file
-* flutter_bloc - The state management solution
-* get_it / injectable - Dependency Management
-* hive / moor / sqflite - Multiple Persistence Libraries to try out multiple datasources for local caching of the shown pokémon
-* supabase - Remote Caching of the shown Pokémon (just an additional datasource)
-* logger - Logging in the Application
-* enume - Representating the Loglevels as Strings
+* [dart](https://dart.dev/) - The programming language
+* [Flutter](https://api.flutter.dev/)
+* [dartz](https://pub.dev/packages/dartz) - Primarly for the Either class, to represent a unified value for each usecase
+* [equatable](https://pub.dev/packages/equatable) - Easily find out if a model / entity is equal. Useful for noticing changes in the BloC state management
+* [flutter_dotenv](https://pub.dev/packages/flutter_dotenv) - To enable profile based environments out of a .env file
+* [flutter_bloc](https://pub.dev/packages/flutter_bloc) - The state management solution
+* [get_it](https://pub.dev/packages/get_it) / [injectable](https://pub.dev/packages/injectable) - Dependency Management
+* [hive]() / [moor](https://pub.dev/packages/moor) / [sqflite](https://pub.dev/packages/sqflite) - Multiple Persistence Libraries to try out multiple datasources for local caching of the shown pokémon
+* [supabase](https://pub.dev/packages/supabase) - Remote Caching of the shown Pokémon (just an additional datasource)
+* [logger](https://pub.dev/packages/logger) - Logging in the Application
+* [enume](https://pub.dev/packages/enume) - Representating the Loglevels as Strings
 
 # Implementation
 The Flutter Part of this application is very basic. It just consists of two pages, the PokemonListPage and the PokemonDetailPage. 
