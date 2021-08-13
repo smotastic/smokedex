@@ -35,20 +35,96 @@ void main() {
 
   setUp(() {
     init();
+    registerFallbackValue(Smartdata.I.getSingle<PokemonModel>());
   });
 
   test('should use local cache when cache is filled', () async {
     // given
     final shouldReadAmount = 25;
-    final pokemons = Smartdata.I.get<PokemonModel>(shouldReadAmount);
-    Either<Failure, List<PokemonModel>> should = Right(pokemons);
+    final localPokemons = Smartdata.I.get<PokemonModel>(shouldReadAmount);
+    final remotePokemons = <PokemonModel>[];
+    Either<Failure, List<PokemonModel>> should = Right(localPokemons);
     when(() => dataSourceLocal.list(any<num>(), any<num>()))
         .thenAnswer((_) => Future.value(should));
+    when(() => dataSourceRemote.list(any<num>(), any<num>()))
+        .thenAnswer((_) => Future.value(Right(remotePokemons)));
     // when
     final actual = await sut.list(shouldReadAmount, 0);
 
+    // then
     expect(actual.isRight(), equals(true));
     final actualEntries = actual.getOrElse(() => throw 'Impossible');
     expect(actualEntries.length, equals(shouldReadAmount));
+  });
+
+  test('should use remote when cache is partially empty', () async {
+    // given
+    final shouldReadAmount = 25;
+    final localPokemons = Smartdata.I
+        .get<PokemonModel>(2); // less than the requested ones in local cache
+    final remotePokemons = Smartdata.I.get<PokemonModel>(shouldReadAmount);
+    Either<Failure, List<PokemonModel>> should = Right(remotePokemons);
+    when(() => dataSourceLocal.list(any<num>(), any<num>()))
+        .thenAnswer((_) => Future.value(Right(localPokemons)));
+    when(() => dataSourceRemote.list(any<num>(), any<num>()))
+        .thenAnswer((_) => Future.value(should));
+
+    when(() => dataSourceLocal.cache(any<num>(), any<PokemonModel>()))
+        .thenAnswer((_) => Future.value(Left(UnknownFailure())));
+    when(() => cacheDataSourceRemote.cache(any<PokemonModel>()))
+        .thenAnswer((_) => Future.value(Right(true)));
+    // when
+    final actual = await sut.list(shouldReadAmount, 0);
+
+    // then
+    expect(actual.isRight(), equals(true));
+    final actualEntries = actual.getOrElse(() => throw 'Impossible');
+    expect(actualEntries.length, equals(shouldReadAmount));
+    verify(() => dataSourceRemote.list(any<num>(), any<num>())).called(1);
+    verify(() => dataSourceLocal.cache(any<num>(), any<PokemonModel>()))
+        .called(shouldReadAmount);
+    verify(() => cacheDataSourceRemote.cache(any<PokemonModel>()))
+        .called(shouldReadAmount);
+  });
+
+  test('should use remote when local cache results in failure', () async {
+    // given
+    final shouldReadAmount = 10;
+    final remotePokemons = Smartdata.I.get<PokemonModel>(shouldReadAmount);
+    Either<Failure, List<PokemonModel>> should = Right(remotePokemons);
+
+    when(() => dataSourceLocal.list(any<num>(), any<num>()))
+        .thenAnswer((_) => Future.value(Left(UnknownFailure())));
+    when(() => dataSourceRemote.list(any<num>(), any<num>()))
+        .thenAnswer((_) => Future.value(should));
+
+    when(() => dataSourceLocal.cache(any<num>(), any<PokemonModel>()))
+        .thenAnswer((_) => Future.value(Left(UnknownFailure())));
+    when(() => cacheDataSourceRemote.cache(any<PokemonModel>()))
+        .thenAnswer((_) => Future.value(Right(true)));
+    // when
+    final actual = await sut.list(10, 0);
+    // then
+    expect(actual.isRight(), equals(true));
+    final actualEntries = actual.getOrElse(() => throw 'Impossible');
+    expect(actualEntries.length, equals(shouldReadAmount));
+    verify(() => dataSourceRemote.list(any<num>(), any<num>())).called(1);
+    verify(() => dataSourceLocal.cache(any<num>(), any<PokemonModel>()))
+        .called(shouldReadAmount);
+    verify(() => cacheDataSourceRemote.cache(any<PokemonModel>()))
+        .called(shouldReadAmount);
+  });
+
+  test('should return failure when local and remote fails', () async {
+    // given
+    when(() => dataSourceLocal.list(any<num>(), any<num>()))
+        .thenAnswer((_) => Future.value(Left(UnknownFailure())));
+    when(() => dataSourceRemote.list(any<num>(), any<num>()))
+        .thenAnswer((_) => Future.value(Left(UnknownFailure())));
+    // when
+    final actual = await sut.list(10, 0);
+
+    // then
+    expect(actual.isLeft(), equals(true));
   });
 }
