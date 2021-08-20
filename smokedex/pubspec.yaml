@@ -49,6 +49,7 @@ dependencies:
   smartdata: ^0.0.1
   lumberdash: ^3.0.0
   colorize_lumberdash: ^3.0.0
+  floor: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +61,7 @@ dev_dependencies:
   smartstruct_generator: ^1.2.2
   smartdata_generator: ^0.0.1
   enume_generator: ^1.0.1
+  floor_generator: ^1.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
