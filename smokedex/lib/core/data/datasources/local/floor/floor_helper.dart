@@ -37,4 +37,7 @@ class PokemonFloor {
 abstract class PokemonDao {
   @Query('SELECT * FROM PokemonFloor limit :pageSize offset :offset')
   Future<List<PokemonFloor>> findPokemonPage(int pageSize, int offset);
+
+  @insert
+  Future<void> insertPokemon(PokemonFloor pokemon);
 }

@@ -97,13 +97,25 @@ class _$AppDatabase extends AppDatabase {
 
 class _$PokemonDao extends PokemonDao {
   _$PokemonDao(this.database, this.changeListener)
-      : _queryAdapter = QueryAdapter(database);
+      : _queryAdapter = QueryAdapter(database),
+        _pokemonFloorInsertionAdapter = InsertionAdapter(
+            database,
+            'PokemonFloor',
+            (PokemonFloor item) => <String, Object?>{
+                  'id': item.id,
+                  'name': item.name,
+                  'imageUrl': item.imageUrl,
+                  'weight': item.weight,
+                  'baseExperience': item.baseExperience
+                });
 
   final sqflite.DatabaseExecutor database;
 
   final StreamController<String> changeListener;
 
   final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<PokemonFloor> _pokemonFloorInsertionAdapter;
 
   @override
   Future<List<PokemonFloor>> findPokemonPage(int pageSize, int offset) async {
@@ -116,5 +128,11 @@ class _$PokemonDao extends PokemonDao {
             row['weight'] as int,
             row['baseExperience'] as int),
         arguments: [pageSize, offset]);
+  }
+
+  @override
+  Future<void> insertPokemon(PokemonFloor pokemon) async {
+    await _pokemonFloorInsertionAdapter.insert(
+        pokemon, OnConflictStrategy.abort);
   }
 }
