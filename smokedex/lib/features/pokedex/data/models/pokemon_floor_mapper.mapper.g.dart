@@ -8,4 +8,11 @@ part of 'pokemon_floor_mapper.dart';
 
 class PokemonFloorMapperImpl extends PokemonFloorMapper {
   PokemonFloorMapperImpl() : super();
+
+  @override
+  PokemonFloor fromPokemonModel(PokemonModel model) {
+    final pokemonfloor = PokemonFloor(numToInt(model), model.name,
+        model.imageUrl, model.weight, model.baseExperience);
+    return pokemonfloor;
+  }
 }

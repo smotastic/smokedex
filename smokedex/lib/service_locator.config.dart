@@ -17,9 +17,9 @@ import 'features/pokedex/data/adapter/list_pokemon_adapter.dart' as _i23;
 import 'features/pokedex/data/datasources/local/list_pokemon_ds_local.dart'
     as _i8;
 import 'features/pokedex/data/datasources/local/list_pokemon_ds_local_floor.dart'
-    as _i10;
-import 'features/pokedex/data/datasources/local/list_pokemon_ds_local_hive.dart'
     as _i9;
+import 'features/pokedex/data/datasources/local/list_pokemon_ds_local_hive.dart'
+    as _i10;
 import 'features/pokedex/data/datasources/local/list_pokemon_ds_local_memory.dart'
     as _i19;
 import 'features/pokedex/data/datasources/local/list_pokemon_ds_local_moor.dart'
@@ -62,11 +62,11 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i7.HiveHelper>(() => _i7.HiveHelper(),
       registerFor: {_hive});
   gh.lazySingleton<_i8.ListPokemonDataSourceLocal>(
-      () => _i9.ListPokemonDataSourceLocalHive(get<_i7.HiveHelper>()),
-      registerFor: {_hive});
-  gh.lazySingleton<_i8.ListPokemonDataSourceLocal>(
-      () => _i10.ListPokemonDataSourceLocalFloor(get<_i6.FloorHelper>()),
+      () => _i9.ListPokemonDataSourceLocalFloor(get<_i6.FloorHelper>()),
       registerFor: {_floor});
+  gh.lazySingleton<_i8.ListPokemonDataSourceLocal>(
+      () => _i10.ListPokemonDataSourceLocalHive(get<_i7.HiveHelper>()),
+      registerFor: {_hive});
   gh.lazySingleton<_i11.ListPokemonDataSourceRemote>(
       () => _i11.ListPokemonDataSourceRemoteImpl());
   gh.lazySingleton<_i12.MemoryHelper>(() => _i12.MemoryHelper(),

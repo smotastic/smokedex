@@ -13,4 +13,11 @@ abstract class PokemonFloorMapper {
         floor.weight, floor.baseExperience, [], [], [], []);
     return pokemonmodel;
   }
+
+  @Mapping(source: numToInt, target: 'id')
+  PokemonFloor fromPokemonModel(PokemonModel model);
+}
+
+int numToInt(PokemonModel model) {
+  return model.id.toInt();
 }

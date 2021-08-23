@@ -20,11 +20,13 @@ class ListPokemonDataSourceLocalFloor extends ListPokemonDataSourceLocal {
   ListPokemonDataSourceLocalFloor(this.helper) {
     _database = helper.database;
   }
+
   @override
   Future<Either<Failure, Map<num, PokemonModel>>> cache(
       num index, PokemonModel pokemon) async {
     final db = await _database;
-    // TODO implement
+    await db.pokemonDao
+        .insertPokemon(PokemonFloorMapper.instance.fromPokemonModel(pokemon));
     return Right({index: pokemon});
   }
 
