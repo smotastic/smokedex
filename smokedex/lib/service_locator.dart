@@ -10,6 +10,7 @@ const mobile = const Environment(DeviceSegment.mobile);
 const web = const Environment(DeviceSegment.web);
 
 const moor = const Environment('moor');
+const floor = const Environment('floor');
 const sqlite = const Environment('sqlite');
 const memory = const Environment('memory');
 const hive = const Environment('hive');
