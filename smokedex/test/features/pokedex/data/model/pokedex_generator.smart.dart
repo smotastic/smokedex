@@ -6,6 +6,7 @@
 
 import 'package:smartdata/smartdata.dart';
 import 'package:smokedex/features/pokedex/data/models/pokemon_model.dart';
+import 'package:smokedex/features/pokedex/domain/entities/pokemon_entry.dart';
 
 class PokemonModelGenerator extends Generator {
   @override
@@ -54,9 +55,22 @@ class PokemonHeldItemModelGenerator extends Generator {
   }
 }
 
+class PokemonEntryGenerator extends Generator {
+  @override
+  PokemonEntry generateRandom() {
+    final pokemonentry = PokemonEntry(
+        Smartdata.I.getSingle<String>(),
+        Smartdata.I.getSingle<num>(),
+        Smartdata.I.getSingle<String>(),
+        Smartdata.I.get<String>(10));
+    return pokemonentry;
+  }
+}
+
 $init() {
   Smartdata.put(PokemonModel, PokemonModelGenerator());
   Smartdata.put(PokemonAbilityModel, PokemonAbilityModelGenerator());
   Smartdata.put(PokemonStatModel, PokemonStatModelGenerator());
   Smartdata.put(PokemonHeldItemModel, PokemonHeldItemModelGenerator());
+  Smartdata.put(PokemonEntry, PokemonEntryGenerator());
 }
